@@ -11,7 +11,23 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
-} catch (e) {}
+
+    // DataTables.net
+    //dt = require( 'datatables.net' )( window, $ );
+    //require( 'datatables.net-bs4' )( $ );
+    //require( 'datatables.net-buttons' )( window, $ );
+    //require( 'datatables.net-buttons-bs4' )( $ );
+
+    // dt = require( 'datatables.net' )();
+    // require( 'datatables.net-buttons' )();
+    // require( 'datatables.net-bs4' )();
+    // require( 'datatables.net-buttons-bs4' )();
+    //
+    require( 'datatables.net-bs4' )();
+    require( 'datatables.net-buttons-bs4' )();
+} catch (e) {
+  console.log(e);
+}
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
