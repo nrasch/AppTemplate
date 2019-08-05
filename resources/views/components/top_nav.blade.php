@@ -22,6 +22,19 @@
           <a class="dropdown-item" href="#">Another action</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>
+
+          <!-- Add the logout link and hidden form -->
+      		<a id="logoutFormLink" href="#" class="text-danger dropdown-item">
+      			<i class="fas fa-sign-out-alt"></i>
+            Logout
+      		</a>
+      		{{ Form::open([
+              'route' => 'logout',
+              'method' => 'POST',
+              'display' => 'none',
+              'id' => 'logoutForm',
+      	       ]) }}
+          {{ Form::close() }}
         </div>
       </li>
     </ul>

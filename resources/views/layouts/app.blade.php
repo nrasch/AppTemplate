@@ -70,6 +70,11 @@
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });
+
+    $('#logoutFormLink').click( function(e) {
+      e.preventDefault();
+      $('#logoutForm').submit();
+    });
   </script>
 
   @yield('js_after')
