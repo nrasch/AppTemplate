@@ -71,6 +71,7 @@
       $("#wrapper").toggleClass("toggled");
     });
 
+    // Log the user out of the application
     $('#logoutFormLink').click( function(e) {
       e.preventDefault();
       $('#logoutForm').submit();

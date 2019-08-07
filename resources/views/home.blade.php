@@ -14,7 +14,10 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <p>You are logged in!</p>
+                    <p>Your permissions: {{ Auth::user()->getAllPermissions()->pluck('name') }}</p>
+                    <p>Your roles: {{ Auth::user()->getRoleNames() }}</p>
+
                 </div>
             </div>
         </div>

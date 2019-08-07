@@ -18,12 +18,16 @@ class UserSeeder extends Seeder
       'email' => 'admin@admin.com',
       'password' => bcrypt('password')
     ]);
+    // Assign the administrator role
+    $user->assignRole(['administrator', 'user']);
     $user->save();
 
     // Create dev/test data for non-production environments
     if (env('APP_ENV') != 'production') {
       // Create N mumber of users
       factory(User::class, 20)->make()->each(function($user) {
+        // Assign the user role
+        $user->assignRole('user');
         $user->save();
         return true;
       });
