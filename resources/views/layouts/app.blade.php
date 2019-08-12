@@ -43,10 +43,6 @@
 
             @yield('content')
 
-            <!-- React example binding  -->
-            <div class="mt-5" id="example" />
-            <!-- END React example binding  -->
-
           </main>
         </div>
         <!-- END <div class="container-fluid"> -->
