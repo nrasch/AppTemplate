@@ -26,6 +26,10 @@
     },
     "dependencies": {
         "datatables.net-bs4": "^1.10.19",
-        "datatables.net-buttons-bs4": "^1.5.6"
+        "datatables.net-buttons-bs4": "^1.5.6",
+        "highcharts": "^7.1.2",
+        "highcharts-react-official": "^2.2.2",
+        "react-loading-overlay": "^1.0.1",
+        "react-modal": "^3.9.1"
     }
 }
