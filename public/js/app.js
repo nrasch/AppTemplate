@@ -85681,8 +85681,6 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
  */
 
 
-__webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
-
 __webpack_require__(/*! ./components/Charts */ "./resources/js/components/Charts.js");
 
 /***/ }),
@@ -85751,16 +85749,16 @@ if (token) {
 
 /***/ }),
 
-/***/ "./resources/js/components/CategoryChart.js":
-/*!**************************************************!*\
-  !*** ./resources/js/components/CategoryChart.js ***!
-  \**************************************************/
+/***/ "./resources/js/components/BaseChart.js":
+/*!**********************************************!*\
+  !*** ./resources/js/components/BaseChart.js ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CategoryChart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return BaseChart; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -85803,10 +85801,222 @@ __webpack_require__(/*! highcharts/modules/exporting */ "./node_modules/highchar
 
 __webpack_require__(/*! highcharts/modules/export-data */ "./node_modules/highcharts/modules/export-data.js")(highcharts__WEBPACK_IMPORTED_MODULE_3___default.a);
 
-var CategoryChart =
+var BaseChart =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(CategoryChart, _Component);
+  _inherits(BaseChart, _Component);
+
+  /**
+  * Class constructor
+  */
+  function BaseChart(props) {
+    var _this;
+
+    _classCallCheck(this, BaseChart);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(BaseChart).call(this, props));
+    _this.state = {
+      // Show/hide the chart overlay on ajax requests to notify the user activity is happening
+      showOverlay: false,
+      // Show/hide graph filter options modal
+      isFilterModalOpen: false,
+      // District chart filter value
+      districtFilter: 0,
+      // Tracks if a filter has been selectec by the user which requires the chart data to be updated
+      needDataUpdate: true,
+      // Set filter modal title and content label
+      modalTitle: "PLACEHOLDER",
+      modalContentLabel: "PLACEHOLDER"
+    }; // END this.state = {
+    // Bindings
+
+    _this.toggleFilterModal = _this.toggleFilterModal.bind(_assertThisInitialized(_this));
+    _this.saveFilter = _this.saveFilter.bind(_assertThisInitialized(_this));
+    return _this;
+  } // END constructor(props) {
+
+  /**
+  * Shows/hides the charter filter modal
+  */
+
+
+  _createClass(BaseChart, [{
+    key: "toggleFilterModal",
+    value: function toggleFilterModal() {
+      // If a filter has been selected refresh the chart data
+      if (this.state.isFilterModalOpen && this.state.needDataUpdate) {
+        this.refreshData();
+      } // Toggle the modal
+
+
+      this.setState({
+        isFilterModalOpen: !this.state.isFilterModalOpen
+      });
+    }
+    /**
+    * Actions to take once the component has mounted
+    */
+
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.refreshData();
+    }
+    /**
+    * Save any user selected filters in the state
+    */
+
+  }, {
+    key: "saveFilter",
+    value: function saveFilter(event) {
+      var _this$setState;
+
+      this.setState((_this$setState = {}, _defineProperty(_this$setState, event.target.id, event.target.value), _defineProperty(_this$setState, "needDataUpdate", true), _this$setState));
+    }
+    /**
+    * Make an ajax call to the backend to fetch data for the graph
+    */
+
+  }, {
+    key: "refreshData",
+    value: function refreshData() {
+      var _this2 = this;
+
+      // Show the overlay while the ajax request is processing
+      this.setState({
+        showOverlay: true
+      }); // Utilize axios to make the ajax call to the backend
+
+      axios.get('/charts/get_sales', {
+        // Include any query filters
+        params: {
+          district: this.state.districtFilter
+        }
+      }).then(function (response) {
+        if (response.data.data) {
+          _this2.setState({
+            // Update the chart's series which will refresh it
+            chartOptions: {
+              colors: ["#7cb5ec", "#434348"],
+              series: response.data.data.series,
+              xAxis: {
+                categories: response.data.data.categories
+              }
+            }
+          });
+        } else {
+          _this2.setState({
+            chartOptions: {
+              series: [],
+              xAxis: {}
+            }
+          });
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      }).then(function () {
+        // Hide the ajax processing overlay
+        _this2.setState({
+          showOverlay: false,
+          needDataUpdate: false
+        });
+      });
+    } // END refreshData() {
+    // Create the HTML to be drawn on the page
+
+  }, {
+    key: "render",
+    value: function render() {
+      var chartOptions = this.state.chartOptions;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_loading_overlay__WEBPACK_IMPORTED_MODULE_4___default.a, {
+        active: this.state.showOverlay,
+        spinner: true,
+        text: "Working..."
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(highcharts_react_official__WEBPACK_IMPORTED_MODULE_2___default.a, {
+        highcharts: highcharts__WEBPACK_IMPORTED_MODULE_3___default.a,
+        options: chartOptions
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "mt-3 btn btn-primary",
+        onClick: this.toggleFilterModal
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-bars mr-3"
+      }), "Chart filter options")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Common_FormModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        isOpen: this.state.isFilterModalOpen,
+        onRequestClose: this.toggleFilterModal,
+        contentLabel: this.state.modalContentLabel,
+        title: this.state.modalTitle,
+        modalAppElement: "#react-charts",
+        styleOverride: new Object({
+          width: '40%',
+          left: '35%'
+        })
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "mr-sm-2",
+        htmlFor: "districtFilter"
+      }, "Store"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        className: "custom-select mr-sm-2 col-2",
+        id: "districtFilter",
+        name: "districtFilter",
+        value: this.state.districtFilter,
+        onChange: this.saveFilter
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "0"
+      }, "All Stores"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Alberta"
+      }, "Alberta"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "QLD"
+      }, "QLD"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-primary mb-3",
+        onClick: this.toggleFilterModal
+      }, "Apply")))));
+    } // END render()
+
+  }]);
+
+  return BaseChart;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/CategoryChart.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/CategoryChart.js ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CategoryChart; });
+/* harmony import */ var _BaseChart__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BaseChart */ "./resources/js/components/BaseChart.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+var CategoryChart =
+/*#__PURE__*/
+function (_BaseChart) {
+  _inherits(CategoryChart, _BaseChart);
 
   /**
   * Class constructor
@@ -85879,65 +86089,20 @@ function (_Component) {
           }
         }
       },
-      // Show/hide the chart overlay on ajax requests to notify the user activity is happening
-      showOverlay: false,
-      // Show/hide chart filter options modal
-      isFilterModalOpen: false,
-      // District chart filter value
-      districtFilter: 0,
-      // Tracks if a filter has been selectec by the user which requires the chart data to be updated
-      needDataUpdate: true
-    }; // END this.state = {
-    // Bindings
+      // Set filter modal title and content label
+      modalTitle: "Film inventory by category",
+      modalContentLabel: "Film inventory by category" // END this.state
 
-    _this.toggleFilterModal = _this.toggleFilterModal.bind(_assertThisInitialized(_this));
-    _this.saveFilter = _this.saveFilter.bind(_assertThisInitialized(_this));
+    };
     return _this;
-  } // END constructor(props) {
+  } // END constructor(props)
 
   /**
-  * Shows/hides the charter filter modal
+  * Make an ajax call to the backend to fetch data for the graph
   */
 
 
   _createClass(CategoryChart, [{
-    key: "toggleFilterModal",
-    value: function toggleFilterModal() {
-      // If a filter has been selected refresh the chart data
-      if (this.state.isFilterModalOpen && this.state.needDataUpdate) {
-        this.refreshData();
-      } // Toggle the modal
-
-
-      this.setState({
-        isFilterModalOpen: !this.state.isFilterModalOpen
-      });
-    }
-    /**
-    * Actions to take once the component has mounted
-    */
-
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.refreshData();
-    }
-    /**
-    * Save any user selected filters in the state
-    */
-
-  }, {
-    key: "saveFilter",
-    value: function saveFilter(event) {
-      var _this$setState;
-
-      this.setState((_this$setState = {}, _defineProperty(_this$setState, event.target.id, event.target.value), _defineProperty(_this$setState, "needDataUpdate", true), _this$setState));
-    }
-    /**
-    * Make an ajax call to the backend to fetch data for the graph
-    */
-
-  }, {
     key: "refreshData",
     value: function refreshData() {
       var _this2 = this;
@@ -85982,60 +86147,11 @@ function (_Component) {
         });
       });
     } // END refreshData() {
-    // Create the HTML to be drawn on the page
 
-  }, {
-    key: "render",
-    value: function render() {
-      var chartOptions = this.state.chartOptions;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_loading_overlay__WEBPACK_IMPORTED_MODULE_4___default.a, {
-        active: this.state.showOverlay,
-        spinner: true,
-        text: "Working..."
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(highcharts_react_official__WEBPACK_IMPORTED_MODULE_2___default.a, {
-        highcharts: highcharts__WEBPACK_IMPORTED_MODULE_3___default.a,
-        options: chartOptions
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "mt-3 btn btn-primary",
-        onClick: this.toggleFilterModal
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-bars mr-3"
-      }), "Chart filter options")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Common_FormModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        isOpen: this.state.isFilterModalOpen,
-        onRequestClose: this.toggleFilterModal,
-        contentLabel: "Film inventory by category filter options",
-        title: "Film inventory by category filter options",
-        modalAppElement: "#react-charts",
-        styleOverride: new Object({
-          width: '40%',
-          left: '35%'
-        })
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        className: "mr-sm-2",
-        htmlFor: "districtFilter"
-      }, "Store"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        className: "custom-select mr-sm-2 col-2",
-        id: "districtFilter",
-        name: "districtFilter",
-        value: this.state.districtFilter,
-        onChange: this.saveFilter
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "0"
-      }, "All Stores"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "Alberta"
-      }, "Alberta"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "QLD"
-      }, "QLD"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-primary mb-3",
-        onClick: this.toggleFilterModal
-      }, "Apply")))));
-    }
   }]);
 
   return CategoryChart;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(_BaseChart__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
 
@@ -86268,82 +86384,6 @@ function (_React$Component) {
 
 /***/ }),
 
-/***/ "./resources/js/components/Example.js":
-/*!********************************************!*\
-  !*** ./resources/js/components/Example.js ***!
-  \********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Example; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
-
-
-var Example =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(Example, _Component);
-
-  function Example() {
-    _classCallCheck(this, Example);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(Example).apply(this, arguments));
-  }
-
-  _createClass(Example, [{
-    key: "render",
-    value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "row justify-content-center"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-md-8"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "card"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "card-header"
-      }, "Example Component"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "card-body"
-      }, "I'm an example component!")))));
-    }
-  }]);
-
-  return Example;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
-
-
-
-if (document.getElementById('example')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Example, null), document.getElementById('example'));
-}
-
-/***/ }),
-
 /***/ "./resources/js/components/RentalsChart.js":
 /*!*************************************************!*\
   !*** ./resources/js/components/RentalsChart.js ***!
@@ -86358,16 +86398,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var highcharts_react_official__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! highcharts-react-official */ "./node_modules/highcharts-react-official/dist/highcharts-react.min.js");
-/* harmony import */ var highcharts_react_official__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(highcharts_react_official__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! highcharts */ "./node_modules/highcharts/highcharts.js");
-/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(highcharts__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_loading_overlay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-loading-overlay */ "./node_modules/react-loading-overlay/lib/LoadingOverlay.js");
-/* harmony import */ var react_loading_overlay__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_loading_overlay__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Common_FormModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Common/FormModal */ "./resources/js/components/Common/FormModal.js");
+/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! highcharts */ "./node_modules/highcharts/highcharts.js");
+/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(highcharts__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _BaseChart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./BaseChart */ "./resources/js/components/BaseChart.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -86377,9 +86411,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -86390,16 +86424,10 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
-
-__webpack_require__(/*! highcharts/modules/exporting */ "./node_modules/highcharts/modules/exporting.js")(highcharts__WEBPACK_IMPORTED_MODULE_3___default.a);
-
-__webpack_require__(/*! highcharts/modules/export-data */ "./node_modules/highcharts/modules/export-data.js")(highcharts__WEBPACK_IMPORTED_MODULE_3___default.a);
-
 var RentalsChart =
 /*#__PURE__*/
-function (_Component) {
-  _inherits(RentalsChart, _Component);
+function (_BaseChart) {
+  _inherits(RentalsChart, _BaseChart);
 
   /**
   * Class constructor
@@ -86453,7 +86481,7 @@ function (_Component) {
                 x2: 0,
                 y2: 1
               },
-              stops: [[0, highcharts__WEBPACK_IMPORTED_MODULE_3___default.a.getOptions().colors[0]], [1, highcharts__WEBPACK_IMPORTED_MODULE_3___default.a.Color(highcharts__WEBPACK_IMPORTED_MODULE_3___default.a.getOptions().colors[0]).setOpacity(0).get('rgba')]]
+              stops: [[0, highcharts__WEBPACK_IMPORTED_MODULE_2___default.a.getOptions().colors[0]], [1, highcharts__WEBPACK_IMPORTED_MODULE_2___default.a.Color(highcharts__WEBPACK_IMPORTED_MODULE_2___default.a.getOptions().colors[0]).setOpacity(0).get('rgba')]]
             },
             marker: {
               radius: 2
@@ -86481,65 +86509,20 @@ function (_Component) {
           }
         }
       },
-      // Show/hide the chart overlay on ajax requests to notify the user activity is happening
-      showOverlay: false,
-      // Show/hide graph filter options modal
-      isFilterModalOpen: false,
-      // District chart filter value
-      districtFilter: 0,
-      // Tracks if a filter has been selectec by the user which requires the chart data to be updated
-      needDataUpdate: true
-    }; // END this.state = {
-    // Bindings
+      // Set filter modal title and content label
+      modalTitle: "Rentals over time graph filter options",
+      modalContentLabel: "Rentals over time graph filter options"
+    }; // END this.state
 
-    _this.toggleFilterModal = _this.toggleFilterModal.bind(_assertThisInitialized(_this));
-    _this.saveFilter = _this.saveFilter.bind(_assertThisInitialized(_this));
     return _this;
   } // END constructor(props) {
 
   /**
-  * Shows/hides the charter filter modal
+  * Make an ajax call to the backend to fetch data for the graph
   */
 
 
   _createClass(RentalsChart, [{
-    key: "toggleFilterModal",
-    value: function toggleFilterModal() {
-      // If a filter has been selected refresh the chart data
-      if (this.state.isFilterModalOpen && this.state.needDataUpdate) {
-        this.refreshData();
-      } // Toggle the modal
-
-
-      this.setState({
-        isFilterModalOpen: !this.state.isFilterModalOpen
-      });
-    }
-    /**
-    * Actions to take once the component has mounted
-    */
-
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.refreshData();
-    }
-    /**
-    * Save any user selected filters in the state
-    */
-
-  }, {
-    key: "saveFilter",
-    value: function saveFilter(event) {
-      var _this$setState;
-
-      this.setState((_this$setState = {}, _defineProperty(_this$setState, event.target.id, event.target.value), _defineProperty(_this$setState, "needDataUpdate", true), _this$setState));
-    }
-    /**
-    * Make an ajax call to the backend to fetch data for the graph
-    */
-
-  }, {
     key: "refreshData",
     value: function refreshData() {
       var _this2 = this;
@@ -86580,60 +86563,11 @@ function (_Component) {
         });
       });
     } // END refreshData() {
-    // Create the HTML to be drawn on the page
 
-  }, {
-    key: "render",
-    value: function render() {
-      var chartOptions = this.state.chartOptions;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_loading_overlay__WEBPACK_IMPORTED_MODULE_4___default.a, {
-        active: this.state.showOverlay,
-        spinner: true,
-        text: "Working..."
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(highcharts_react_official__WEBPACK_IMPORTED_MODULE_2___default.a, {
-        highcharts: highcharts__WEBPACK_IMPORTED_MODULE_3___default.a,
-        options: chartOptions
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "mt-3 btn btn-primary",
-        onClick: this.toggleFilterModal
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-bars mr-3"
-      }), "Chart filter options")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Common_FormModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        isOpen: this.state.isFilterModalOpen,
-        onRequestClose: this.toggleFilterModal,
-        contentLabel: "Rentals over time graph filter options",
-        title: "Rentals over time graph filter options",
-        modalAppElement: "#react-charts",
-        styleOverride: new Object({
-          width: '40%',
-          left: '35%'
-        })
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        className: "mr-sm-2",
-        htmlFor: "districtFilter"
-      }, "Store"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        className: "custom-select mr-sm-2 col-2",
-        id: "districtFilter",
-        name: "districtFilter",
-        value: this.state.districtFilter,
-        onChange: this.saveFilter
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "0"
-      }, "All Stores"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "Alberta"
-      }, "Alberta"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "QLD"
-      }, "QLD"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-primary mb-3",
-        onClick: this.toggleFilterModal
-      }, "Apply")))));
-    }
   }]);
 
   return RentalsChart;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(_BaseChart__WEBPACK_IMPORTED_MODULE_3__["default"]);
 
 
 
@@ -86649,20 +86583,8 @@ function (_Component) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SalesChart; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var highcharts_react_official__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! highcharts-react-official */ "./node_modules/highcharts-react-official/dist/highcharts-react.min.js");
-/* harmony import */ var highcharts_react_official__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(highcharts_react_official__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! highcharts */ "./node_modules/highcharts/highcharts.js");
-/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(highcharts__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_loading_overlay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-loading-overlay */ "./node_modules/react-loading-overlay/lib/LoadingOverlay.js");
-/* harmony import */ var react_loading_overlay__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_loading_overlay__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Common_FormModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Common/FormModal */ "./resources/js/components/Common/FormModal.js");
+/* harmony import */ var _BaseChart__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BaseChart */ "./resources/js/components/BaseChart.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -86672,9 +86594,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -86682,19 +86604,10 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
-
-
-
-
-__webpack_require__(/*! highcharts/modules/exporting */ "./node_modules/highcharts/modules/exporting.js")(highcharts__WEBPACK_IMPORTED_MODULE_3___default.a);
-
-__webpack_require__(/*! highcharts/modules/export-data */ "./node_modules/highcharts/modules/export-data.js")(highcharts__WEBPACK_IMPORTED_MODULE_3___default.a);
-
 var SalesChart =
 /*#__PURE__*/
-function (_Component) {
-  _inherits(SalesChart, _Component);
+function (_BaseChart) {
+  _inherits(SalesChart, _BaseChart);
 
   /**
   * Class constructor
@@ -86767,65 +86680,20 @@ function (_Component) {
           }
         }
       },
-      // Show/hide the chart overlay on ajax requests to notify the user activity is happening
-      showOverlay: false,
-      // Show/hide graph filter options modal
-      isFilterModalOpen: false,
-      // District chart filter value
-      districtFilter: 0,
-      // Tracks if a filter has been selectec by the user which requires the chart data to be updated
-      needDataUpdate: true
-    }; // END this.state = {
-    // Bindings
+      // Set filter modal title and content label
+      modalTitle: "Annual sales graph filter options",
+      modalContentLabel: "Annual sales graph filter options" // END this.state
 
-    _this.toggleFilterModal = _this.toggleFilterModal.bind(_assertThisInitialized(_this));
-    _this.saveFilter = _this.saveFilter.bind(_assertThisInitialized(_this));
+    };
     return _this;
-  } // END constructor(props) {
+  } // END constructor(props)
 
   /**
-  * Shows/hides the charter filter modal
+  * Make an ajax call to the backend to fetch data for the graph
   */
 
 
   _createClass(SalesChart, [{
-    key: "toggleFilterModal",
-    value: function toggleFilterModal() {
-      // If a filter has been selected refresh the chart data
-      if (this.state.isFilterModalOpen && this.state.needDataUpdate) {
-        this.refreshData();
-      } // Toggle the modal
-
-
-      this.setState({
-        isFilterModalOpen: !this.state.isFilterModalOpen
-      });
-    }
-    /**
-    * Actions to take once the component has mounted
-    */
-
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.refreshData();
-    }
-    /**
-    * Save any user selected filters in the state
-    */
-
-  }, {
-    key: "saveFilter",
-    value: function saveFilter(event) {
-      var _this$setState;
-
-      this.setState((_this$setState = {}, _defineProperty(_this$setState, event.target.id, event.target.value), _defineProperty(_this$setState, "needDataUpdate", true), _this$setState));
-    }
-    /**
-    * Make an ajax call to the backend to fetch data for the graph
-    */
-
-  }, {
     key: "refreshData",
     value: function refreshData() {
       var _this2 = this;
@@ -86870,60 +86738,11 @@ function (_Component) {
         });
       });
     } // END refreshData() {
-    // Create the HTML to be drawn on the page
 
-  }, {
-    key: "render",
-    value: function render() {
-      var chartOptions = this.state.chartOptions;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_loading_overlay__WEBPACK_IMPORTED_MODULE_4___default.a, {
-        active: this.state.showOverlay,
-        spinner: true,
-        text: "Working..."
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(highcharts_react_official__WEBPACK_IMPORTED_MODULE_2___default.a, {
-        highcharts: highcharts__WEBPACK_IMPORTED_MODULE_3___default.a,
-        options: chartOptions
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "mt-3 btn btn-primary",
-        onClick: this.toggleFilterModal
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-bars mr-3"
-      }), "Chart filter options")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Common_FormModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
-        isOpen: this.state.isFilterModalOpen,
-        onRequestClose: this.toggleFilterModal,
-        contentLabel: "Annual sales graph filter options",
-        title: "Annual sales graph filter options",
-        modalAppElement: "#react-charts",
-        styleOverride: new Object({
-          width: '40%',
-          left: '35%'
-        })
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "form-group"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        className: "mr-sm-2",
-        htmlFor: "districtFilter"
-      }, "Store"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
-        className: "custom-select mr-sm-2 col-2",
-        id: "districtFilter",
-        name: "districtFilter",
-        value: this.state.districtFilter,
-        onChange: this.saveFilter
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "0"
-      }, "All Stores"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "Alberta"
-      }, "Alberta"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: "QLD"
-      }, "QLD"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-primary mb-3",
-        onClick: this.toggleFilterModal
-      }, "Apply")))));
-    }
   }]);
 
   return SalesChart;
-}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+}(_BaseChart__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
 
