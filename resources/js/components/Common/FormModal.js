@@ -5,6 +5,9 @@ import Modal from 'react-modal';
 // Modal settings
 Modal.defaultStyles.overlay.backgroundColor = 'rgba(0,0,0,0.4)';
 const modalContentStyle = {
+  overlay: {
+    zIndex: 1000
+  },
   content : {
     top                   : '25%',
     left                  : '27%',
@@ -61,7 +64,6 @@ export default class FormModal extends React.Component {
             {this.props.children}
           </div>
           <div className="block-content block-content-full text-right border-top">
-            <button type="button" className="btn btn-sm" onClick={this.props.onRequestClose}>Close</button>
           </div>
         </div>
       </Modal>

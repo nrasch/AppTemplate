@@ -25959,6 +25959,94 @@ e(a),d[n]=[],b=0;b<a.length;b++)g[n][b]&&(d[n][b]={},t(a[b],g[n][b],d[n][b],m+1)
 
 /***/ }),
 
+/***/ "./node_modules/highcharts/modules/export-data.js":
+/*!********************************************************!*\
+  !*** ./node_modules/highcharts/modules/export-data.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+ Highcharts JS v7.1.2 (2019-06-03)
+
+ Exporting module
+
+ (c) 2010-2019 Torstein Honsi
+
+ License: www.highcharts.com/license
+*/
+(function(c){ true&&module.exports?(c["default"]=c,module.exports=c): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! highcharts */ "./node_modules/highcharts/highcharts.js"),__webpack_require__(/*! highcharts/modules/exporting */ "./node_modules/highcharts/modules/exporting.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function(f){c(f);c.Highcharts=f;return c}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined})(function(c){function f(a,d,b,g){a.hasOwnProperty(d)||(a[d]=g.apply(null,b))}c=c?c._modules:{};f(c,"mixins/ajax.js",[c["parts/Globals.js"]],function(a){a.ajax=function(d){var b=a.merge(!0,{url:!1,
+type:"GET",dataType:"json",success:!1,error:!1,data:!1,headers:{}},d);d={json:"application/json",xml:"application/xml",text:"text/plain",octet:"application/octet-stream"};var g=new XMLHttpRequest;if(!b.url)return!1;g.open(b.type.toUpperCase(),b.url,!0);g.setRequestHeader("Content-Type",d[b.dataType]||d.text);a.objectEach(b.headers,function(a,d){g.setRequestHeader(d,a)});g.onreadystatechange=function(){var a;if(4===g.readyState){if(200===g.status){a=g.responseText;if("json"===b.dataType)try{a=JSON.parse(a)}catch(n){b.error&&
+b.error(g,n);return}return b.success&&b.success(a)}b.error&&b.error(g,g.responseText)}};try{b.data=JSON.stringify(b.data)}catch(D){}g.send(b.data||!0)}});f(c,"mixins/download-url.js",[c["parts/Globals.js"]],function(a){var d=a.win,b=d.navigator,g=d.document,c=d.URL||d.webkitURL||d,n=/Edge\/\d+/.test(b.userAgent);a.dataURLtoBlob=function(a){if((a=a.match(/data:([^;]*)(;base64)?,([0-9A-Za-z+/]+)/))&&3<a.length&&d.atob&&d.ArrayBuffer&&d.Uint8Array&&d.Blob&&c.createObjectURL){for(var g=d.atob(a[3]),b=
+new d.ArrayBuffer(g.length),b=new d.Uint8Array(b),h=0;h<b.length;++h)b[h]=g.charCodeAt(h);a=new d.Blob([b],{type:a[1]});return c.createObjectURL(a)}};a.downloadURL=function(h,c){var q=g.createElement("a"),r;if("string"===typeof h||h instanceof String||!b.msSaveOrOpenBlob){if(n||2E6<h.length)if(h=a.dataURLtoBlob(h),!h)throw Error("Failed to convert to blob");if(void 0!==q.download)q.href=h,q.download=c,g.body.appendChild(q),q.click(),g.body.removeChild(q);else try{if(r=d.open(h,"chart"),void 0===r||
+null===r)throw Error("Failed to open window");}catch(l){d.location.href=h}}else b.msSaveOrOpenBlob(h,c)}});f(c,"modules/export-data.src.js",[c["parts/Globals.js"]],function(a){function d(a,b){if(c.Blob&&c.navigator.msSaveOrOpenBlob)return new c.Blob(["\ufeff"+a],{type:b})}var b=a.defined,g=a.pick,c=a.win,n=c.document,h=a.seriesTypes,f=a.downloadURL,q=a.fireEvent;a.setOptions({exporting:{csv:{columnHeaderFormatter:null,dateFormat:"%Y-%m-%d %H:%M:%S",decimalPoint:null,itemDelimiter:null,lineDelimiter:"\n"},
+showTable:!1,useMultiLevelHeaders:!0,useRowspanHeaders:!0},lang:{downloadCSV:"Download CSV",downloadXLS:"Download XLS",openInCloud:"Open in Highcharts Cloud",viewData:"View data table"}});a.addEvent(a.Chart,"render",function(){this.options&&this.options.exporting&&this.options.exporting.showTable&&this.viewData()});a.Chart.prototype.setUpKeyToAxis=function(){h.arearange&&(h.arearange.prototype.keyToAxis={low:"y",high:"y"});h.gantt&&(h.gantt.prototype.keyToAxis={start:"x",end:"x"})};a.Chart.prototype.getDataRows=
+function(c){var d=this.time,h=this.options.exporting&&this.options.exporting.csv||{},k,l=this.xAxis,t={},f=[],m,n=[],p=[],x,u,v,C=function(e,d,b){if(h.columnHeaderFormatter){var k=h.columnHeaderFormatter(e,d,b);if(!1!==k)return k}return e?e instanceof a.Axis?e.options.title&&e.options.title.text||(e.isDatetimeAxis?"DateTime":"Category"):c?{columnTitle:1<b?d:e.name,topLevelColumnTitle:e.name}:e.name+(1<b?" ("+d+")":""):"Category"},y=[];u=0;this.setUpKeyToAxis();this.series.forEach(function(e){var b=
+e.options.keys||e.pointArrayMap||["y"],k=b.length,v=!e.requireSorting&&{},w={},A={},m=l.indexOf(e.xAxis),B,f;b.forEach(function(a){var b=(e.keyToAxis&&e.keyToAxis[a]||a)+"Axis";w[a]=e[b]&&e[b].categories||[];A[a]=e[b]&&e[b].isDatetimeAxis});if(!1!==e.options.includeInDataExport&&!e.options.isInternal&&!1!==e.visible){a.find(y,function(e){return e[0]===m})||y.push([m,u]);for(f=0;f<k;)x=C(e,b[f],b.length),p.push(x.columnTitle||x),c&&n.push(x.topLevelColumnTitle||x),f++;B={chart:e.chart,autoIncrement:e.autoIncrement,
+options:e.options,pointArrayMap:e.pointArrayMap};e.options.data.forEach(function(a,c){var l,p;p={series:B};e.pointClass.prototype.applyOptions.apply(p,[a]);a=p.x;l=e.data[c]&&e.data[c].name;f=0;e.xAxis&&"name"!==e.exportKey||(a=l);v&&(v[a]&&(a+="|"+c),v[a]=!0);t[a]||(t[a]=[],t[a].xValues=[]);t[a].x=p.x;t[a].name=l;for(t[a].xValues[m]=p.x;f<k;)c=b[f],l=p[c],t[a][u+f]=g(w[c][l],A[c]?d.dateFormat(h.dateFormat,l):null,l),f++});u+=f}});for(m in t)t.hasOwnProperty(m)&&f.push(t[m]);var w,z;m=c?[n,p]:[p];
+for(u=y.length;u--;)w=y[u][0],z=y[u][1],k=l[w],f.sort(function(a,b){return a.xValues[w]-b.xValues[w]}),v=C(k),m[0].splice(z,0,v),c&&m[1]&&m[1].splice(z,0,v),f.forEach(function(a){var e=a.name;k&&!b(e)&&(k.isDatetimeAxis?(a.x instanceof Date&&(a.x=a.x.getTime()),e=d.dateFormat(h.dateFormat,a.x)):e=k.categories?g(k.names[a.x],k.categories[a.x],a.x):a.x);a.splice(z,0,e)});m=m.concat(f);q(this,"exportData",{dataRows:m});return m};a.Chart.prototype.getCSV=function(a){var b="",c=this.getDataRows(),d=this.options.exporting.csv,
+l=g(d.decimalPoint,","!==d.itemDelimiter&&a?(1.1).toLocaleString()[1]:"."),h=g(d.itemDelimiter,","===l?";":","),f=d.lineDelimiter;c.forEach(function(a,d){for(var k,g=a.length;g--;)k=a[g],"string"===typeof k&&(k='"'+k+'"'),"number"===typeof k&&"."!==l&&(k=k.toString().replace(".",l)),a[g]=k;b+=a.join(h);d<c.length-1&&(b+=f)});return b};a.Chart.prototype.getTable=function(a){var b='\x3ctable id\x3d"highcharts-data-table-'+this.index+'"\x3e',c=this.options,d=a?(1.1).toLocaleString()[1]:".",h=g(c.exporting.useMultiLevelHeaders,
+!0);a=this.getDataRows(h);var f=0,l=h?a.shift():null,m=a.shift(),n=function(a,b,c,h){var k=g(h,"");b="text"+(b?" "+b:"");"number"===typeof k?(k=k.toString(),","===d&&(k=k.replace(".",d)),b="number"):h||(b="empty");return"\x3c"+a+(c?" "+c:"")+' class\x3d"'+b+'"\x3e'+k+"\x3c/"+a+"\x3e"};!1!==c.exporting.tableCaption&&(b+='\x3ccaption class\x3d"highcharts-table-caption"\x3e'+g(c.exporting.tableCaption,c.title.text?c.title.text.replace(/&/g,"\x26amp;").replace(/</g,"\x26lt;").replace(/>/g,"\x26gt;").replace(/"/g,
+"\x26quot;").replace(/'/g,"\x26#x27;").replace(/\//g,"\x26#x2F;"):"Chart")+"\x3c/caption\x3e");for(var p=0,r=a.length;p<r;++p)a[p].length>f&&(f=a[p].length);b+=function(a,b,d){var k="\x3cthead\x3e",f=0;d=d||b&&b.length;var g,e,l=0;if(e=h&&a&&b){a:if(e=a.length,b.length===e){for(;e--;)if(a[e]!==b[e]){e=!1;break a}e=!0}else e=!1;e=!e}if(e){for(k+="\x3ctr\x3e";f<d;++f)e=a[f],g=a[f+1],e===g?++l:l?(k+=n("th","highcharts-table-topheading",'scope\x3d"col" colspan\x3d"'+(l+1)+'"',e),l=0):(e===b[f]?c.exporting.useRowspanHeaders?
+(g=2,delete b[f]):(g=1,b[f]=""):g=1,k+=n("th","highcharts-table-topheading",'scope\x3d"col"'+(1<g?' valign\x3d"top" rowspan\x3d"'+g+'"':""),e));k+="\x3c/tr\x3e"}if(b){k+="\x3ctr\x3e";f=0;for(d=b.length;f<d;++f)void 0!==b[f]&&(k+=n("th",null,'scope\x3d"col"',b[f]));k+="\x3c/tr\x3e"}return k+"\x3c/thead\x3e"}(l,m,Math.max(f,m.length));b+="\x3ctbody\x3e";a.forEach(function(a){b+="\x3ctr\x3e";for(var c=0;c<f;c++)b+=n(c?"td":"th",null,c?"":'scope\x3d"row"',a[c]);b+="\x3c/tr\x3e"});b+="\x3c/tbody\x3e\x3c/table\x3e";
+a={html:b};q(this,"afterGetTable",a);return a.html};a.Chart.prototype.downloadCSV=function(){var a=this.getCSV(!0);f(d(a,"text/csv")||"data:text/csv,\ufeff"+encodeURIComponent(a),this.getFilename()+".csv")};a.Chart.prototype.downloadXLS=function(){var a='\x3chtml xmlns:o\x3d"urn:schemas-microsoft-com:office:office" xmlns:x\x3d"urn:schemas-microsoft-com:office:excel" xmlns\x3d"http://www.w3.org/TR/REC-html40"\x3e\x3chead\x3e\x3c!--[if gte mso 9]\x3e\x3cxml\x3e\x3cx:ExcelWorkbook\x3e\x3cx:ExcelWorksheets\x3e\x3cx:ExcelWorksheet\x3e\x3cx:Name\x3eArk1\x3c/x:Name\x3e\x3cx:WorksheetOptions\x3e\x3cx:DisplayGridlines/\x3e\x3c/x:WorksheetOptions\x3e\x3c/x:ExcelWorksheet\x3e\x3c/x:ExcelWorksheets\x3e\x3c/x:ExcelWorkbook\x3e\x3c/xml\x3e\x3c![endif]--\x3e\x3cstyle\x3etd{border:none;font-family: Calibri, sans-serif;} .number{mso-number-format:"0.00";} .text{ mso-number-format:"@";}\x3c/style\x3e\x3cmeta name\x3dProgId content\x3dExcel.Sheet\x3e\x3cmeta charset\x3dUTF-8\x3e\x3c/head\x3e\x3cbody\x3e'+
+this.getTable(!0)+"\x3c/body\x3e\x3c/html\x3e";f(d(a,"application/vnd.ms-excel")||"data:application/vnd.ms-excel;base64,"+c.btoa(unescape(encodeURIComponent(a))),this.getFilename()+".xls")};a.Chart.prototype.viewData=function(){this.dataTableDiv||(this.dataTableDiv=n.createElement("div"),this.dataTableDiv.className="highcharts-data-table",this.renderTo.parentNode.insertBefore(this.dataTableDiv,this.renderTo.nextSibling));this.dataTableDiv.innerHTML=this.getTable();q(this,"afterViewData",this.dataTableDiv)};
+a.Chart.prototype.openInCloud=function(){function b(c){Object.keys(c).forEach(function(d){"function"===typeof c[d]&&delete c[d];a.isObject(c[d])&&b(c[d])})}var c,d;c=a.merge(this.userOptions);b(c);c={name:c.title&&c.title.text||"Chart title",options:c,settings:{constructor:"Chart",dataProvider:{csv:this.getCSV()}}};d=JSON.stringify(c);(function(){var a=n.createElement("form");n.body.appendChild(a);a.method="post";a.action="https://cloud-api.highcharts.com/openincloud";a.target="_blank";var b=n.createElement("input");
+b.type="hidden";b.name="chart";b.value=d;a.appendChild(b);a.submit();n.body.removeChild(a)})()};var r=a.getOptions().exporting;r&&(a.extend(r.menuItemDefinitions,{downloadCSV:{textKey:"downloadCSV",onclick:function(){this.downloadCSV()}},downloadXLS:{textKey:"downloadXLS",onclick:function(){this.downloadXLS()}},viewData:{textKey:"viewData",onclick:function(){this.viewData()}},openInCloud:{textKey:"openInCloud",onclick:function(){this.openInCloud()}}}),r.buttons&&r.buttons.contextButton.menuItems.push("separator",
+"downloadCSV","downloadXLS","viewData","openInCloud"));h.map&&(h.map.prototype.exportKey="name");h.mapbubble&&(h.mapbubble.prototype.exportKey="name");h.treemap&&(h.treemap.prototype.exportKey="name")});f(c,"masters/modules/export-data.src.js",[],function(){})});
+//# sourceMappingURL=export-data.js.map
+
+/***/ }),
+
+/***/ "./node_modules/highcharts/modules/exporting.js":
+/*!******************************************************!*\
+  !*** ./node_modules/highcharts/modules/exporting.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
+ Highcharts JS v7.1.2 (2019-06-03)
+
+ Exporting module
+
+ (c) 2010-2019 Torstein Honsi
+
+ License: www.highcharts.com/license
+*/
+(function(f){ true&&module.exports?(f["default"]=f,module.exports=f): true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! highcharts */ "./node_modules/highcharts/highcharts.js")], __WEBPACK_AMD_DEFINE_RESULT__ = (function(h){f(h);f.Highcharts=h;return f}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined})(function(f){function h(c,C,f,p){c.hasOwnProperty(C)||(c[C]=p.apply(null,f))}f=f?f._modules:{};h(f,"modules/full-screen.src.js",[f["parts/Globals.js"]],function(c){c.FullScreen=function(c){this.init(c.parentNode)};c.FullScreen.prototype=
+{init:function(c){c.requestFullscreen?c.requestFullscreen():c.mozRequestFullScreen?c.mozRequestFullScreen():c.webkitRequestFullscreen?c.webkitRequestFullscreen():c.msRequestFullscreen&&c.msRequestFullscreen()}}});h(f,"mixins/navigation.js",[],function(){return{initUpdate:function(c){c.navigation||(c.navigation={updates:[],update:function(c,f){this.updates.forEach(function(p){p.update.call(p.context,c,f)})}})},addUpdate:function(c,f){f.navigation||this.initUpdate(f);f.navigation.updates.push({update:c,
+context:f})}}});h(f,"modules/exporting.src.js",[f["parts/Globals.js"],f["mixins/navigation.js"]],function(c,f){var h=c.defaultOptions,p=c.doc,A=c.Chart,r=c.addEvent,C=c.removeEvent,D=c.fireEvent,w=c.createElement,E=c.discardElement,t=c.css,n=c.merge,q=c.pick,F=c.objectEach,y=c.extend,J=c.isTouchDevice,z=c.win,H=z.navigator.userAgent,G=c.SVGRenderer,I=c.Renderer.prototype.symbols,K=/Edge\/|Trident\/|MSIE /.test(H),L=/firefox/i.test(H);y(h.lang,{viewFullscreen:"View in full screen",printChart:"Print chart",
+downloadPNG:"Download PNG image",downloadJPEG:"Download JPEG image",downloadPDF:"Download PDF document",downloadSVG:"Download SVG vector image",contextButtonTitle:"Chart context menu"});h.navigation||(h.navigation={});n(!0,h.navigation,{buttonOptions:{theme:{},symbolSize:14,symbolX:12.5,symbolY:10.5,align:"right",buttonSpacing:3,height:22,verticalAlign:"top",width:24}});n(!0,h.navigation,{menuStyle:{border:"1px solid #999999",background:"#ffffff",padding:"5px 0"},menuItemStyle:{padding:"0.5em 1em",
+color:"#333333",background:"none",fontSize:J?"14px":"11px",transition:"background 250ms, color 250ms"},menuItemHoverStyle:{background:"#335cad",color:"#ffffff"},buttonOptions:{symbolFill:"#666666",symbolStroke:"#666666",symbolStrokeWidth:3,theme:{padding:5}}});h.exporting={type:"image/png",url:"https://export.highcharts.com/",printMaxWidth:780,scale:2,buttons:{contextButton:{className:"highcharts-contextbutton",menuClassName:"highcharts-contextmenu",symbol:"menu",titleKey:"contextButtonTitle",menuItems:"viewFullscreen printChart separator downloadPNG downloadJPEG downloadPDF downloadSVG".split(" ")}},
+menuItemDefinitions:{viewFullscreen:{textKey:"viewFullscreen",onclick:function(){this.fullscreen=new c.FullScreen(this.container)}},printChart:{textKey:"printChart",onclick:function(){this.print()}},separator:{separator:!0},downloadPNG:{textKey:"downloadPNG",onclick:function(){this.exportChart()}},downloadJPEG:{textKey:"downloadJPEG",onclick:function(){this.exportChart({type:"image/jpeg"})}},downloadPDF:{textKey:"downloadPDF",onclick:function(){this.exportChart({type:"application/pdf"})}},downloadSVG:{textKey:"downloadSVG",
+onclick:function(){this.exportChart({type:"image/svg+xml"})}}}};c.post=function(b,a,c){var d=w("form",n({method:"post",action:b,enctype:"multipart/form-data"},c),{display:"none"},p.body);F(a,function(a,b){w("input",{type:"hidden",name:b,value:a},null,d)});d.submit();E(d)};y(A.prototype,{sanitizeSVG:function(b,a){var c=b.indexOf("\x3c/svg\x3e")+6,d=b.substr(c);b=b.substr(0,c);a&&a.exporting&&a.exporting.allowHTML&&d&&(d='\x3cforeignObject x\x3d"0" y\x3d"0" width\x3d"'+a.chart.width+'" height\x3d"'+
+a.chart.height+'"\x3e\x3cbody xmlns\x3d"http://www.w3.org/1999/xhtml"\x3e'+d+"\x3c/body\x3e\x3c/foreignObject\x3e",b=b.replace("\x3c/svg\x3e",d+"\x3c/svg\x3e"));b=b.replace(/zIndex="[^"]+"/g,"").replace(/symbolName="[^"]+"/g,"").replace(/jQuery[0-9]+="[^"]+"/g,"").replace(/url\(("|&quot;)(\S+)("|&quot;)\)/g,"url($2)").replace(/url\([^#]+#/g,"url(#").replace(/<svg /,'\x3csvg xmlns:xlink\x3d"http://www.w3.org/1999/xlink" ').replace(/ (|NS[0-9]+\:)href=/g," xlink:href\x3d").replace(/\n/," ").replace(/(fill|stroke)="rgba\(([ 0-9]+,[ 0-9]+,[ 0-9]+),([ 0-9\.]+)\)"/g,
+'$1\x3d"rgb($2)" $1-opacity\x3d"$3"').replace(/&nbsp;/g,"\u00a0").replace(/&shy;/g,"\u00ad");this.ieSanitizeSVG&&(b=this.ieSanitizeSVG(b));return b},getChartHTML:function(){this.styledMode&&this.inlineStyles();return this.container.innerHTML},getSVG:function(b){var a,u,d,f,m,k=n(this.options,b);k.plotOptions=n(this.userOptions.plotOptions,b&&b.plotOptions);u=w("div",null,{position:"absolute",top:"-9999em",width:this.chartWidth+"px",height:this.chartHeight+"px"},p.body);d=this.renderTo.style.width;
+m=this.renderTo.style.height;d=k.exporting.sourceWidth||k.chart.width||/px$/.test(d)&&parseInt(d,10)||(k.isGantt?800:600);m=k.exporting.sourceHeight||k.chart.height||/px$/.test(m)&&parseInt(m,10)||400;y(k.chart,{animation:!1,renderTo:u,forExport:!0,renderer:"SVGRenderer",width:d,height:m});k.exporting.enabled=!1;delete k.data;k.series=[];this.series.forEach(function(a){f=n(a.userOptions,{animation:!1,enableMouseTracking:!1,showCheckbox:!1,visible:a.visible});f.isInternal||k.series.push(f)});this.axes.forEach(function(a){a.userOptions.internalKey||
+(a.userOptions.internalKey=c.uniqueKey())});a=new c.Chart(k,this.callback);b&&["xAxis","yAxis","series"].forEach(function(d){var c={};b[d]&&(c[d]=b[d],a.update(c))});this.axes.forEach(function(b){var d=c.find(a.axes,function(a){return a.options.internalKey===b.userOptions.internalKey}),e=b.getExtremes(),u=e.userMin,e=e.userMax;d&&(void 0!==u&&u!==d.min||void 0!==e&&e!==d.max)&&d.setExtremes(u,e,!0,!1)});d=a.getChartHTML();D(this,"getSVG",{chartCopy:a});d=this.sanitizeSVG(d,k);k=null;a.destroy();E(u);
+return d},getSVGForExport:function(b,a){var c=this.options.exporting;return this.getSVG(n({chart:{borderRadius:0}},c.chartOptions,a,{exporting:{sourceWidth:b&&b.sourceWidth||c.sourceWidth,sourceHeight:b&&b.sourceHeight||c.sourceHeight}}))},getFilename:function(){var b=this.userOptions.title&&this.userOptions.title.text,a=this.options.exporting.filename;if(a)return a;"string"===typeof b&&(a=b.toLowerCase().replace(/<\/?[^>]+(>|$)/g,"").replace(/[\s_]+/g,"-").replace(/[^a-z0-9\-]/g,"").replace(/^[\-]+/g,
+"").replace(/[\-]+/g,"-").substr(0,24).replace(/[\-]+$/g,""));if(!a||5>a.length)a="chart";return a},exportChart:function(b,a){a=this.getSVGForExport(b,a);b=n(this.options.exporting,b);c.post(b.url,{filename:b.filename||this.getFilename(),type:b.type,width:b.width||0,scale:b.scale,svg:a},b.formAttributes)},print:function(){function b(b){(a.fixedDiv?[a.fixedDiv,a.scrollingContainer]:[a.container]).forEach(function(a){b.appendChild(a)})}var a=this,c=[],d=p.body,f=d.childNodes,m=a.options.exporting.printMaxWidth,
+k,e;if(!a.isPrinting){a.isPrinting=!0;a.pointer.reset(null,0);D(a,"beforePrint");if(e=m&&a.chartWidth>m)k=[a.options.chart.width,void 0,!1],a.setSize(m,void 0,!1);[].forEach.call(f,function(a,b){1===a.nodeType&&(c[b]=a.style.display,a.style.display="none")});b(d);setTimeout(function(){z.focus();z.print();setTimeout(function(){b(a.renderTo);[].forEach.call(f,function(a,b){1===a.nodeType&&(a.style.display=c[b])});a.isPrinting=!1;e&&a.setSize.apply(a,k);D(a,"afterPrint")},1E3)},1)}},contextMenu:function(b,
+a,u,d,f,m,k){var e=this,x=e.options.navigation,l=e.chartWidth,v=e.chartHeight,h="cache-"+b,g=e[h],B=Math.max(f,m),n;g||(e.exportContextMenu=e[h]=g=w("div",{className:b},{position:"absolute",zIndex:1E3,padding:B+"px",pointerEvents:"auto"},e.fixedDiv||e.container),n=w("div",{className:"highcharts-menu"},null,g),e.styledMode||t(n,y({MozBoxShadow:"3px 3px 10px #888",WebkitBoxShadow:"3px 3px 10px #888",boxShadow:"3px 3px 10px #888"},x.menuStyle)),g.hideMenu=function(){t(g,{display:"none"});k&&k.setState(0);
+e.openMenu=!1;t(e.renderTo,{overflow:"hidden"});c.clearTimeout(g.hideTimer);D(e,"exportMenuHidden")},e.exportEvents.push(r(g,"mouseleave",function(){g.hideTimer=setTimeout(g.hideMenu,500)}),r(g,"mouseenter",function(){c.clearTimeout(g.hideTimer)}),r(p,"mouseup",function(a){e.pointer.inClass(a.target,b)||g.hideMenu()}),r(g,"click",function(){e.openMenu&&g.hideMenu()})),a.forEach(function(a){"string"===typeof a&&(a=e.options.exporting.menuItemDefinitions[a]);if(c.isObject(a,!0)){var b;a.separator?b=
+w("hr",null,null,n):(b=w("div",{className:"highcharts-menu-item",onclick:function(b){b&&b.stopPropagation();g.hideMenu();a.onclick&&a.onclick.apply(e,arguments)},innerHTML:a.text||e.options.lang[a.textKey]},null,n),e.styledMode||(b.onmouseover=function(){t(this,x.menuItemHoverStyle)},b.onmouseout=function(){t(this,x.menuItemStyle)},t(b,y({cursor:"pointer"},x.menuItemStyle))));e.exportDivElements.push(b)}}),e.exportDivElements.push(n,g),e.exportMenuWidth=g.offsetWidth,e.exportMenuHeight=g.offsetHeight);
+a={display:"block"};u+e.exportMenuWidth>l?a.right=l-u-f-B+"px":a.left=u-B+"px";d+m+e.exportMenuHeight>v&&"top"!==k.alignOptions.verticalAlign?a.bottom=v-d-B+"px":a.top=d+m-B+"px";t(g,a);t(e.renderTo,{overflow:""});e.openMenu=!0},addButton:function(b){var a=this,c=a.renderer,d=n(a.options.navigation.buttonOptions,b),f=d.onclick,m=d.menuItems,k,e,h=d.symbolSize||12;a.btnCount||(a.btnCount=0);a.exportDivElements||(a.exportDivElements=[],a.exportSVGElements=[]);if(!1!==d.enabled){var l=d.theme,v=l.states,
+p=v&&v.hover,v=v&&v.select,g;a.styledMode||(l.fill=q(l.fill,"#ffffff"),l.stroke=q(l.stroke,"none"));delete l.states;f?g=function(b){b&&b.stopPropagation();f.call(a,b)}:m&&(g=function(b){b&&b.stopPropagation();a.contextMenu(e.menuClassName,m,e.translateX,e.translateY,e.width,e.height,e);e.setState(2)});d.text&&d.symbol?l.paddingLeft=q(l.paddingLeft,25):d.text||y(l,{width:d.width,height:d.height,padding:0});a.styledMode||(l["stroke-linecap"]="round",l.fill=q(l.fill,"#ffffff"),l.stroke=q(l.stroke,"none"));
+e=c.button(d.text,0,0,g,l,p,v).addClass(b.className).attr({title:q(a.options.lang[d._titleKey||d.titleKey],"")});e.menuClassName=b.menuClassName||"highcharts-menu-"+a.btnCount++;d.symbol&&(k=c.symbol(d.symbol,d.symbolX-h/2,d.symbolY-h/2,h,h,{width:h,height:h}).addClass("highcharts-button-symbol").attr({zIndex:1}).add(e),a.styledMode||k.attr({stroke:d.symbolStroke,fill:d.symbolFill,"stroke-width":d.symbolStrokeWidth||1}));e.add(a.exportingGroup).align(y(d,{width:e.width,x:q(d.x,a.buttonOffset)}),!0,
+"spacingBox");a.buttonOffset+=(e.width+d.buttonSpacing)*("right"===d.align?-1:1);a.exportSVGElements.push(e,k)}},destroyExport:function(b){var a=b?b.target:this;b=a.exportSVGElements;var f=a.exportDivElements,d=a.exportEvents,h;b&&(b.forEach(function(b,d){b&&(b.onclick=b.ontouchstart=null,h="cache-"+b.menuClassName,a[h]&&delete a[h],a.exportSVGElements[d]=b.destroy())}),b.length=0);a.exportingGroup&&(a.exportingGroup.destroy(),delete a.exportingGroup);f&&(f.forEach(function(b,d){c.clearTimeout(b.hideTimer);
+C(b,"mouseleave");a.exportDivElements[d]=b.onmouseout=b.onmouseover=b.ontouchstart=b.onclick=null;E(b)}),f.length=0);d&&(d.forEach(function(b){b()}),d.length=0)}});G.prototype.inlineToAttributes="fill stroke strokeLinecap strokeLinejoin strokeWidth textAnchor x y".split(" ");G.prototype.inlineBlacklist=[/-/,/^(clipPath|cssText|d|height|width)$/,/^font$/,/[lL]ogical(Width|Height)$/,/perspective/,/TapHighlightColor/,/^transition/,/^length$/];G.prototype.unstyledElements=["clipPath","defs","desc"];A.prototype.inlineStyles=
+function(){function b(b){return b.replace(/([A-Z])/g,function(b,a){return"-"+a.toLowerCase()})}function a(c){function u(a,g){q=v=!1;if(h){for(r=h.length;r--&&!v;)v=h[r].test(g);q=!v}"transform"===g&&"none"===a&&(q=!0);for(r=f.length;r--&&!q;)q=f[r].test(g)||"function"===typeof a;q||m[g]===a&&"svg"!==c.nodeName||e[c.nodeName][g]===a||(-1!==d.indexOf(g)?c.setAttribute(b(g),a):p+=b(g)+":"+a+";")}var g,m,p="",t,q,v,r;if(1===c.nodeType&&-1===k.indexOf(c.nodeName)){g=z.getComputedStyle(c,null);m="svg"===
+c.nodeName?{}:z.getComputedStyle(c.parentNode,null);e[c.nodeName]||(x=l.getElementsByTagName("svg")[0],t=l.createElementNS(c.namespaceURI,c.nodeName),x.appendChild(t),e[c.nodeName]=n(z.getComputedStyle(t,null)),"text"===c.nodeName&&delete e.text.fill,x.removeChild(t));if(L||K)for(var w in g)u(g[w],w);else F(g,u);p&&(g=c.getAttribute("style"),c.setAttribute("style",(g?g+";":"")+p));"svg"===c.nodeName&&c.setAttribute("stroke-width","1px");"text"!==c.nodeName&&[].forEach.call(c.children||c.childNodes,
+a)}}var c=this.renderer,d=c.inlineToAttributes,f=c.inlineBlacklist,h=c.inlineWhitelist,k=c.unstyledElements,e={},x,l,c=p.createElement("iframe");t(c,{width:"1px",height:"1px",visibility:"hidden"});p.body.appendChild(c);l=c.contentWindow.document;l.open();l.write('\x3csvg xmlns\x3d"http://www.w3.org/2000/svg"\x3e\x3c/svg\x3e');l.close();a(this.container.querySelector("svg"));x.parentNode.removeChild(x)};I.menu=function(b,a,c,d){return["M",b,a+2.5,"L",b+c,a+2.5,"M",b,a+d/2+.5,"L",b+c,a+d/2+.5,"M",b,
+a+d-1.5,"L",b+c,a+d-1.5]};I.menuball=function(b,a,c,d){b=[];d=d/3-2;return b=b.concat(this.circle(c-d,a,d,d),this.circle(c-d,a+d+4,d,d),this.circle(c-d,a+2*(d+4),d,d))};A.prototype.renderExporting=function(){var b=this,a=b.options.exporting,c=a.buttons,d=b.isDirtyExporting||!b.exportSVGElements;b.buttonOffset=0;b.isDirtyExporting&&b.destroyExport();d&&!1!==a.enabled&&(b.exportEvents=[],b.exportingGroup=b.exportingGroup||b.renderer.g("exporting-group").attr({zIndex:3}).add(),F(c,function(a){b.addButton(a)}),
+b.isDirtyExporting=!1);r(b,"destroy",b.destroyExport)};r(A,"init",function(){var b=this;b.exporting={update:function(a,c){b.isDirtyExporting=!0;n(!0,b.options.exporting,a);q(c,!0)&&b.redraw()}};f.addUpdate(function(a,c){b.isDirtyExporting=!0;n(!0,b.options.navigation,a);q(c,!0)&&b.redraw()},b)});A.prototype.callbacks.push(function(b){b.renderExporting();r(b,"redraw",b.renderExporting)})});h(f,"masters/modules/exporting.src.js",[],function(){})});
+//# sourceMappingURL=exporting.js.map
+
+/***/ }),
+
 /***/ "./node_modules/is-buffer/index.js":
 /*!*****************************************!*\
   !*** ./node_modules/is-buffer/index.js ***!
@@ -85663,16 +85751,16 @@ if (token) {
 
 /***/ }),
 
-/***/ "./resources/js/components/AreaChart.js":
-/*!**********************************************!*\
-  !*** ./resources/js/components/AreaChart.js ***!
-  \**********************************************/
+/***/ "./resources/js/components/CategoryChart.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/CategoryChart.js ***!
+  \**************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return AreaChart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return CategoryChart; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -85681,7 +85769,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var highcharts_react_official__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(highcharts_react_official__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! highcharts */ "./node_modules/highcharts/highcharts.js");
 /* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(highcharts__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_loading_overlay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-loading-overlay */ "./node_modules/react-loading-overlay/lib/LoadingOverlay.js");
+/* harmony import */ var react_loading_overlay__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_loading_overlay__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _Common_FormModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Common/FormModal */ "./resources/js/components/Common/FormModal.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -85691,9 +85784,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -85704,92 +85797,244 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var AreaChart =
+
+
+__webpack_require__(/*! highcharts/modules/exporting */ "./node_modules/highcharts/modules/exporting.js")(highcharts__WEBPACK_IMPORTED_MODULE_3___default.a);
+
+__webpack_require__(/*! highcharts/modules/export-data */ "./node_modules/highcharts/modules/export-data.js")(highcharts__WEBPACK_IMPORTED_MODULE_3___default.a);
+
+var CategoryChart =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(AreaChart, _Component);
+  _inherits(CategoryChart, _Component);
 
-  function AreaChart(props) {
+  /**
+  * Class constructor
+  */
+  function CategoryChart(props) {
     var _this;
 
-    _classCallCheck(this, AreaChart);
+    _classCallCheck(this, CategoryChart);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(AreaChart).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CategoryChart).call(this, props));
     _this.state = {
-      // To avoid unnecessary update keep all options in the state.
+      // Keeping the Highchart options in the state to avoid unnecessary updates
+      // as per the Highchart reccomendations
+      //
+      // Highchart API reference: https://api.highcharts.com/highcharts/
       chartOptions: {
         chart: {
-          type: 'area'
+          height: 300,
+          type: 'column',
+          scrollablePlotArea: {
+            minWidth: 700
+          }
         },
         title: {
-          text: 'US and USSR nuclear stockpiles'
+          text: 'Film inventory by category'
         },
         subtitle: {
-          text: 'Sources: <a href="https://thebulletin.org/2006/july/global-nuclear-stockpiles-1945-2006">' + 'thebulletin.org</a> &amp; <a href="https://www.armscontrol.org/factsheets/Nuclearweaponswhohaswhat">' + 'armscontrol.org</a>'
+          text: 'Source: https://dev.mysql.com/doc/sakila/en/'
         },
         xAxis: {
-          allowDecimals: false,
-          labels: {
-            formatter: function formatter() {
-              return this.value; // clean, unformatted number for year
-            }
+          title: {
+            text: 'Film Category'
           }
         },
-        yAxis: {
+        yAxis: [{
+          // left y axis
           title: {
-            text: 'Nuclear weapon states'
+            text: 'Number of Films'
           },
-          labels: {
-            formatter: function formatter() {
-              return this.value / 1000 + 'k';
-            }
-          }
+          labels: {},
+          showFirstLabel: false
+        }],
+        legend: {
+          align: 'left',
+          verticalAlign: 'top',
+          borderWidth: 0
         },
         tooltip: {
-          pointFormat: '{series.name} had stockpiled <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
+          shared: true,
+          crosshairs: true
         },
         plotOptions: {
-          area: {
-            pointStart: 1940,
+          series: {
+            cursor: 'pointer',
+            point: {
+              events: {}
+            },
             marker: {
-              enabled: false,
-              symbol: 'circle',
-              radius: 2,
-              states: {
-                hover: {
-                  enabled: true
-                }
-              }
+              lineWidth: 1
             }
           }
         },
-        series: [{
-          name: 'USA',
-          data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640, 1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126, 27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662, 26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605, 24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586, 22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950, 10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104, 9914, 9620, 9326, 5113, 5113, 4954, 4804, 4761, 4717, 4368, 4018]
-        }, {
-          name: 'USSR/Russia',
-          data: [null, null, null, null, null, null, null, null, null, null, 5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471, 3322, 4238, 5221, 6129, 7089, 8339, 9399, 10538, 11643, 13092, 14478, 15915, 17385, 19055, 21205, 23044, 25393, 27935, 30062, 32049, 33952, 35804, 37431, 39197, 45000, 43000, 41000, 39000, 37000, 35000, 33000, 31000, 29000, 27000, 25000, 24000, 23000, 22000, 21000, 20000, 19000, 18000, 18000, 17000, 16000, 15537, 14162, 12787, 12600, 11400, 5500, 4512, 4502, 4502, 4500, 4500]
-        }]
-      }
-    }; // Bindings
+        series: [],
+        exporting: {
+          enabled: true,
+          buttons: {
+            contextButton: {
+              menuItems: ['downloadPNG', 'downloadJPEG', 'downloadPDF', 'separator', 'downloadCSV', 'downloadXLS']
+            }
+          }
+        }
+      },
+      // Show/hide the chart overlay on ajax requests to notify the user activity is happening
+      showOverlay: false,
+      // Show/hide chart filter options modal
+      isFilterModalOpen: false,
+      // District chart filter value
+      districtFilter: 0,
+      // Tracks if a filter has been selectec by the user which requires the chart data to be updated
+      needDataUpdate: true
+    }; // END this.state = {
+    // Bindings
 
+    _this.toggleFilterModal = _this.toggleFilterModal.bind(_assertThisInitialized(_this));
+    _this.saveFilter = _this.saveFilter.bind(_assertThisInitialized(_this));
     return _this;
-  }
+  } // END constructor(props) {
 
-  _createClass(AreaChart, [{
+  /**
+  * Shows/hides the charter filter modal
+  */
+
+
+  _createClass(CategoryChart, [{
+    key: "toggleFilterModal",
+    value: function toggleFilterModal() {
+      // If a filter has been selected refresh the chart data
+      if (this.state.isFilterModalOpen && this.state.needDataUpdate) {
+        this.refreshData();
+      } // Toggle the modal
+
+
+      this.setState({
+        isFilterModalOpen: !this.state.isFilterModalOpen
+      });
+    }
+    /**
+    * Actions to take once the component has mounted
+    */
+
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.refreshData();
+    }
+    /**
+    * Save any user selected filters in the state
+    */
+
+  }, {
+    key: "saveFilter",
+    value: function saveFilter(event) {
+      var _this$setState;
+
+      this.setState((_this$setState = {}, _defineProperty(_this$setState, event.target.id, event.target.value), _defineProperty(_this$setState, "needDataUpdate", true), _this$setState));
+    }
+    /**
+    * Make an ajax call to the backend to fetch data for the graph
+    */
+
+  }, {
+    key: "refreshData",
+    value: function refreshData() {
+      var _this2 = this;
+
+      // Show the overlay while the ajax request is processing
+      this.setState({
+        showOverlay: true
+      }); // Utilize axios to make the ajax call to the backend
+
+      axios.get('/charts/get_categories', {
+        // Include any query filters
+        params: {
+          district: this.state.districtFilter
+        }
+      }).then(function (response) {
+        if (response.data.data) {
+          _this2.setState({
+            // Update the chart's series which will refresh it
+            chartOptions: {
+              colors: ["#7cb5ec", "#434348"],
+              series: response.data.data.series,
+              xAxis: {
+                categories: response.data.data.categories
+              }
+            }
+          });
+        } else {
+          _this2.setState({
+            chartOptions: {
+              series: [],
+              xAxis: {}
+            }
+          });
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      }).then(function () {
+        // Hide the ajax processing overlay
+        _this2.setState({
+          showOverlay: false,
+          needDataUpdate: false
+        });
+      });
+    } // END refreshData() {
+    // Create the HTML to be drawn on the page
+
+  }, {
     key: "render",
     value: function render() {
-      var _this$state = this.state,
-          chartOptions = _this$state.chartOptions,
-          hoverData = _this$state.hoverData;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(highcharts_react_official__WEBPACK_IMPORTED_MODULE_2___default.a, {
+      var chartOptions = this.state.chartOptions;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_loading_overlay__WEBPACK_IMPORTED_MODULE_4___default.a, {
+        active: this.state.showOverlay,
+        spinner: true,
+        text: "Working..."
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(highcharts_react_official__WEBPACK_IMPORTED_MODULE_2___default.a, {
         highcharts: highcharts__WEBPACK_IMPORTED_MODULE_3___default.a,
         options: chartOptions
-      }));
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "mt-3 btn btn-primary",
+        onClick: this.toggleFilterModal
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-bars mr-3"
+      }), "Chart filter options")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Common_FormModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        isOpen: this.state.isFilterModalOpen,
+        onRequestClose: this.toggleFilterModal,
+        contentLabel: "Film inventory by category filter options",
+        title: "Film inventory by category filter options",
+        modalAppElement: "#react-charts",
+        styleOverride: new Object({
+          width: '40%',
+          left: '35%'
+        })
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "mr-sm-2",
+        htmlFor: "districtFilter"
+      }, "Store"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        className: "custom-select mr-sm-2 col-2",
+        id: "districtFilter",
+        name: "districtFilter",
+        value: this.state.districtFilter,
+        onChange: this.saveFilter
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "0"
+      }, "All Stores"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Alberta"
+      }, "Alberta"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "QLD"
+      }, "QLD"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-primary mb-3",
+        onClick: this.toggleFilterModal
+      }, "Apply")))));
     }
   }]);
 
-  return AreaChart;
+  return CategoryChart;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
@@ -85810,8 +86055,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _LineChart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LineChart */ "./resources/js/components/LineChart.js");
-/* harmony import */ var _AreaChart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AreaChart */ "./resources/js/components/AreaChart.js");
+/* harmony import */ var _SalesChart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SalesChart */ "./resources/js/components/SalesChart.js");
+/* harmony import */ var _CategoryChart__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CategoryChart */ "./resources/js/components/CategoryChart.js");
+/* harmony import */ var _RentalsChart__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RentalsChart */ "./resources/js/components/RentalsChart.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -85829,6 +86075,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -85852,44 +86099,44 @@ function (_Component) {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row justify-content-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col"
+        className: "col-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-bars"
+        className: "fas fa-chart-pie"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "ml-2"
-      }, "Sales by Store")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Annual Sales")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LineChart__WEBPACK_IMPORTED_MODULE_2__["default"], null)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_SalesChart__WEBPACK_IMPORTED_MODULE_2__["default"], null)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-bars"
+        className: "fas fa-chart-pie"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "ml-2"
-      }, "Dashboard 2")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Film Inventory by Category")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AreaChart__WEBPACK_IMPORTED_MODULE_3__["default"], null))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_CategoryChart__WEBPACK_IMPORTED_MODULE_3__["default"], null))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row justify-content-center mt-4"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col"
+        className: "col-12"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-bars"
+        className: "fas fa-chart-pie"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "ml-2"
-      }, "Dashboard 3")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Rental Volume Over Time")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
-      }, "Chart Three"))))); // END return
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RentalsChart__WEBPACK_IMPORTED_MODULE_4__["default"], null)))))); // END return
     } // END render()
 
   }]);
@@ -85945,6 +86192,9 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 react_modal__WEBPACK_IMPORTED_MODULE_2___default.a.defaultStyles.overlay.backgroundColor = 'rgba(0,0,0,0.4)';
 var modalContentStyle = {
+  overlay: {
+    zIndex: 1000
+  },
   content: {
     top: '25%',
     left: '27%',
@@ -86007,11 +86257,7 @@ function (_React$Component) {
         className: "block-content font-size-sm"
       }, this.props.children), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "block-content block-content-full text-right border-top"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        type: "button",
-        className: "btn btn-sm",
-        onClick: this.props.onRequestClose
-      }, "Close"))));
+      })));
     }
   }]);
 
@@ -86098,16 +86344,16 @@ if (document.getElementById('example')) {
 
 /***/ }),
 
-/***/ "./resources/js/components/LineChart.js":
-/*!**********************************************!*\
-  !*** ./resources/js/components/LineChart.js ***!
-  \**********************************************/
+/***/ "./resources/js/components/RentalsChart.js":
+/*!*************************************************!*\
+  !*** ./resources/js/components/RentalsChart.js ***!
+  \*************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return LineChart; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return RentalsChart; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -86146,21 +86392,327 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-var LineChart =
+__webpack_require__(/*! highcharts/modules/exporting */ "./node_modules/highcharts/modules/exporting.js")(highcharts__WEBPACK_IMPORTED_MODULE_3___default.a);
+
+__webpack_require__(/*! highcharts/modules/export-data */ "./node_modules/highcharts/modules/export-data.js")(highcharts__WEBPACK_IMPORTED_MODULE_3___default.a);
+
+var RentalsChart =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(LineChart, _Component);
+  _inherits(RentalsChart, _Component);
 
-  function LineChart(props) {
+  /**
+  * Class constructor
+  */
+  function RentalsChart(props) {
     var _this;
 
-    _classCallCheck(this, LineChart);
+    _classCallCheck(this, RentalsChart);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(LineChart).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(RentalsChart).call(this, props));
     _this.state = {
-      // To avoid unnecessary update keep all options in the state.
+      // Keeping the Highchart options in the state to avoid unnecessary updates
+      // as per the Highchart reccomendations
+      //
+      // Highchart API reference: https://api.highcharts.com/highcharts/
       chartOptions: {
         chart: {
+          height: 300,
+          zoomType: 'x',
+          scrollablePlotArea: {
+            minWidth: 700
+          }
+        },
+        title: {
+          text: 'Rental volume over time'
+        },
+        subtitle: {
+          text: document.ontouchstart === undefined ? 'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+        },
+        xAxis: {
+          type: 'datetime'
+        },
+        yAxis: {
+          title: {
+            text: 'Rental Volume'
+          }
+        },
+        legend: {
+          enabled: false
+        },
+        tooltip: {
+          shared: true,
+          crosshairs: true
+        },
+        plotOptions: {
+          area: {
+            fillColor: {
+              linearGradient: {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: 1
+              },
+              stops: [[0, highcharts__WEBPACK_IMPORTED_MODULE_3___default.a.getOptions().colors[0]], [1, highcharts__WEBPACK_IMPORTED_MODULE_3___default.a.Color(highcharts__WEBPACK_IMPORTED_MODULE_3___default.a.getOptions().colors[0]).setOpacity(0).get('rgba')]]
+            },
+            marker: {
+              radius: 2
+            },
+            lineWidth: 1,
+            states: {
+              hover: {
+                lineWidth: 1
+              }
+            },
+            threshold: null
+          }
+        },
+        series: [{
+          type: 'area',
+          name: 'Sales Volume',
+          data: []
+        }],
+        exporting: {
+          enabled: true,
+          buttons: {
+            contextButton: {
+              menuItems: ['downloadPNG', 'downloadJPEG', 'downloadPDF', 'separator', 'downloadCSV', 'downloadXLS', 'viewData']
+            }
+          }
+        }
+      },
+      // Show/hide the chart overlay on ajax requests to notify the user activity is happening
+      showOverlay: false,
+      // Show/hide graph filter options modal
+      isFilterModalOpen: false,
+      // District chart filter value
+      districtFilter: 0,
+      // Tracks if a filter has been selectec by the user which requires the chart data to be updated
+      needDataUpdate: true
+    }; // END this.state = {
+    // Bindings
+
+    _this.toggleFilterModal = _this.toggleFilterModal.bind(_assertThisInitialized(_this));
+    _this.saveFilter = _this.saveFilter.bind(_assertThisInitialized(_this));
+    return _this;
+  } // END constructor(props) {
+
+  /**
+  * Shows/hides the charter filter modal
+  */
+
+
+  _createClass(RentalsChart, [{
+    key: "toggleFilterModal",
+    value: function toggleFilterModal() {
+      // If a filter has been selected refresh the chart data
+      if (this.state.isFilterModalOpen && this.state.needDataUpdate) {
+        this.refreshData();
+      } // Toggle the modal
+
+
+      this.setState({
+        isFilterModalOpen: !this.state.isFilterModalOpen
+      });
+    }
+    /**
+    * Actions to take once the component has mounted
+    */
+
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.refreshData();
+    }
+    /**
+    * Save any user selected filters in the state
+    */
+
+  }, {
+    key: "saveFilter",
+    value: function saveFilter(event) {
+      var _this$setState;
+
+      this.setState((_this$setState = {}, _defineProperty(_this$setState, event.target.id, event.target.value), _defineProperty(_this$setState, "needDataUpdate", true), _this$setState));
+    }
+    /**
+    * Make an ajax call to the backend to fetch data for the graph
+    */
+
+  }, {
+    key: "refreshData",
+    value: function refreshData() {
+      var _this2 = this;
+
+      // Show the overlay while the ajax request is processing
+      this.setState({
+        showOverlay: true
+      }); // Utilize axios to make the ajax call to the backend
+
+      axios.get('/charts/get_rental_volume', {
+        // Include any query filters
+        params: {
+          district: this.state.districtFilter
+        }
+      }).then(function (response) {
+        if (response.data.data) {
+          // Update the chart's series which will refresh it
+          _this2.setState({
+            chartOptions: {
+              series: response.data.data.series
+            }
+          });
+        } else {
+          _this2.setState({
+            chartOptions: {
+              series: [],
+              xAxis: {}
+            }
+          });
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      }).then(function () {
+        // Hide the ajax processing overlay
+        _this2.setState({
+          showOverlay: false,
+          needDataUpdate: false
+        });
+      });
+    } // END refreshData() {
+    // Create the HTML to be drawn on the page
+
+  }, {
+    key: "render",
+    value: function render() {
+      var chartOptions = this.state.chartOptions;
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_loading_overlay__WEBPACK_IMPORTED_MODULE_4___default.a, {
+        active: this.state.showOverlay,
+        spinner: true,
+        text: "Working..."
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(highcharts_react_official__WEBPACK_IMPORTED_MODULE_2___default.a, {
+        highcharts: highcharts__WEBPACK_IMPORTED_MODULE_3___default.a,
+        options: chartOptions
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "mt-3 btn btn-primary",
+        onClick: this.toggleFilterModal
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "fas fa-bars mr-3"
+      }), "Chart filter options")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Common_FormModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        isOpen: this.state.isFilterModalOpen,
+        onRequestClose: this.toggleFilterModal,
+        contentLabel: "Rentals over time graph filter options",
+        title: "Rentals over time graph filter options",
+        modalAppElement: "#react-charts",
+        styleOverride: new Object({
+          width: '40%',
+          left: '35%'
+        })
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "mr-sm-2",
+        htmlFor: "districtFilter"
+      }, "Store"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        className: "custom-select mr-sm-2 col-2",
+        id: "districtFilter",
+        name: "districtFilter",
+        value: this.state.districtFilter,
+        onChange: this.saveFilter
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "0"
+      }, "All Stores"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Alberta"
+      }, "Alberta"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "QLD"
+      }, "QLD"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-primary mb-3",
+        onClick: this.toggleFilterModal
+      }, "Apply")))));
+    }
+  }]);
+
+  return RentalsChart;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/SalesChart.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/SalesChart.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SalesChart; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var highcharts_react_official__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! highcharts-react-official */ "./node_modules/highcharts-react-official/dist/highcharts-react.min.js");
+/* harmony import */ var highcharts_react_official__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(highcharts_react_official__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! highcharts */ "./node_modules/highcharts/highcharts.js");
+/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(highcharts__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_loading_overlay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-loading-overlay */ "./node_modules/react-loading-overlay/lib/LoadingOverlay.js");
+/* harmony import */ var react_loading_overlay__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_loading_overlay__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _Common_FormModal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Common/FormModal */ "./resources/js/components/Common/FormModal.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+
+__webpack_require__(/*! highcharts/modules/exporting */ "./node_modules/highcharts/modules/exporting.js")(highcharts__WEBPACK_IMPORTED_MODULE_3___default.a);
+
+__webpack_require__(/*! highcharts/modules/export-data */ "./node_modules/highcharts/modules/export-data.js")(highcharts__WEBPACK_IMPORTED_MODULE_3___default.a);
+
+var SalesChart =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(SalesChart, _Component);
+
+  /**
+  * Class constructor
+  */
+  function SalesChart(props) {
+    var _this;
+
+    _classCallCheck(this, SalesChart);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(SalesChart).call(this, props));
+    _this.state = {
+      // Keeping the Highchart options in the state to avoid unnecessary updates
+      // as per the Highchart reccomendations
+      //
+      // Highchart API reference: https://api.highcharts.com/highcharts/
+      chartOptions: {
+        chart: {
+          height: 300,
           scrollablePlotArea: {
             minWidth: 700
           }
@@ -86171,12 +86723,11 @@ function (_Component) {
         subtitle: {
           text: 'Source: https://dev.mysql.com/doc/sakila/en/'
         },
-        colors: ["#7cb5ec", "#434348"],
         xAxis: {},
         yAxis: [{
           // left y axis
           title: {
-            text: 'Sales'
+            text: 'Total Sales per Year'
           },
           labels: {
             align: 'left',
@@ -86206,13 +86757,23 @@ function (_Component) {
             }
           }
         },
-        series: []
+        series: [],
+        exporting: {
+          enabled: true,
+          buttons: {
+            contextButton: {
+              menuItems: ['downloadPNG', 'downloadJPEG', 'downloadPDF', 'separator', 'downloadCSV', 'downloadXLS']
+            }
+          }
+        }
       },
       // Show/hide the chart overlay on ajax requests to notify the user activity is happening
       showOverlay: false,
       // Show/hide graph filter options modal
       isFilterModalOpen: false,
+      // District chart filter value
       districtFilter: 0,
+      // Tracks if a filter has been selectec by the user which requires the chart data to be updated
       needDataUpdate: true
     }; // END this.state = {
     // Bindings
@@ -86222,23 +86783,36 @@ function (_Component) {
     return _this;
   } // END constructor(props) {
 
+  /**
+  * Shows/hides the charter filter modal
+  */
 
-  _createClass(LineChart, [{
+
+  _createClass(SalesChart, [{
     key: "toggleFilterModal",
     value: function toggleFilterModal() {
+      // If a filter has been selected refresh the chart data
       if (this.state.isFilterModalOpen && this.state.needDataUpdate) {
         this.refreshData();
-      }
+      } // Toggle the modal
+
 
       this.setState({
         isFilterModalOpen: !this.state.isFilterModalOpen
       });
     }
+    /**
+    * Actions to take once the component has mounted
+    */
+
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.refreshData();
-    } // END componentDidMount() {
+    }
+    /**
+    * Save any user selected filters in the state
+    */
 
   }, {
     key: "saveFilter",
@@ -86247,6 +86821,10 @@ function (_Component) {
 
       this.setState((_this$setState = {}, _defineProperty(_this$setState, event.target.id, event.target.value), _defineProperty(_this$setState, "needDataUpdate", true), _this$setState));
     }
+    /**
+    * Make an ajax call to the backend to fetch data for the graph
+    */
+
   }, {
     key: "refreshData",
     value: function refreshData() {
@@ -86255,14 +86833,17 @@ function (_Component) {
       // Show the overlay while the ajax request is processing
       this.setState({
         showOverlay: true
-      });
+      }); // Utilize axios to make the ajax call to the backend
+
       axios.get('/charts/get_sales', {
+        // Include any query filters
         params: {
           district: this.state.districtFilter
         }
       }).then(function (response) {
         if (response.data.data) {
           _this2.setState({
+            // Update the chart's series which will refresh it
             chartOptions: {
               colors: ["#7cb5ec", "#434348"],
               series: response.data.data.series,
@@ -86289,6 +86870,7 @@ function (_Component) {
         });
       });
     } // END refreshData() {
+    // Create the HTML to be drawn on the page
 
   }, {
     key: "render",
@@ -86305,7 +86887,7 @@ function (_Component) {
         className: "mt-3 btn btn-primary",
         onClick: this.toggleFilterModal
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fas fa-chart-area mr-3"
+        className: "fas fa-bars mr-3"
       }), "Chart filter options")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Common_FormModal__WEBPACK_IMPORTED_MODULE_5__["default"], {
         isOpen: this.state.isFilterModalOpen,
         onRequestClose: this.toggleFilterModal,
@@ -86340,7 +86922,7 @@ function (_Component) {
     }
   }]);
 
-  return LineChart;
+  return SalesChart;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
