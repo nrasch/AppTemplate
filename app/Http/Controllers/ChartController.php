@@ -82,7 +82,7 @@ class ChartController extends Controller
         $sales = $query->get();
 
         // Return JSON response
-        return response()->json($this->prepData($sales, 'District', 'Sales', $this->line_options))
+        return response()->json($this->prepData($sales, 'Date', 'District', 'Sales', $this->line_options))
             ->setEncodingOptions(JSON_NUMERIC_CHECK);
     }
 
@@ -113,7 +113,7 @@ class ChartController extends Controller
         $counts = $query->get();
 
         // Return JSON response
-        return response()->json($this->prepData($counts, 'District', 'Count', $this->common_options))
+        return response()->json($this->prepData($counts, 'Category', 'District', 'Count', $this->common_options))
             ->setEncodingOptions(JSON_NUMERIC_CHECK);
     }
 
@@ -174,14 +174,14 @@ class ChartController extends Controller
      * @param string $graph_options                         Highchart graph/chart options to apply
      * @return array
      */
-    private function prepData($collection, $pluck_column, $pluck_value, $graph_options)
+    private function prepData($collection, $category_column, $pluck_column, $pluck_value, $graph_options)
     {
         // Assign these to the class, so we can access them in the closure below
         $this->pluck_column = $pluck_column;
         $this->pluck_value = $pluck_value;
 
         // Collect the category names for the Highchart series
-        $cats = $collection->pluck($pluck_column)->unique();
+        $cats = $collection->pluck($category_column)->unique();
 
         // Create the Highchart series data element component
         $data = $collection->mapToGroups(function ($item, $key) {
