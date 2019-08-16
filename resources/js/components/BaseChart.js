@@ -39,7 +39,14 @@ export default class BaseChart extends Component {
     // END constructor(props) {
 
     /**
-    * Shows/hides the charter filter modal
+    * Actions to take once the component has mounted
+    */
+    componentDidMount() {
+        this.refreshData();
+    }
+    
+    /**
+    * Shows/hides the chart filter modal
     */
     toggleFilterModal() {
 
@@ -55,13 +62,6 @@ export default class BaseChart extends Component {
     }
 
     /**
-    * Actions to take once the component has mounted
-    */
-    componentDidMount() {
-        this.refreshData();
-    }
-
-    /**
     * Save any user selected filters in the state
     */
     saveFilter(event) {
@@ -72,69 +72,19 @@ export default class BaseChart extends Component {
         });
     }
 
-    /**
-    * Make an ajax call to the backend to fetch data for the graph
-    */
-    refreshData() {
-
-        // Show the overlay while the ajax request is processing
-        this.setState({
-            showOverlay: true,
-        });
-
-        // Utilize axios to make the ajax call to the backend
-        axios.get('/charts/get_sales', {
-            // Include any query filters
-            params: {
-                district: this.state.districtFilter,
-            }
-        })
-        .then(response => {
-            if (response.data.data) {
-                this.setState({
-                    // Update the chart's series which will refresh it
-                    chartOptions: {
-                        colors: ["#7cb5ec", "#434348"],
-                        series: response.data.data.series,
-                        xAxis: {
-                            categories: response.data.data.categories,
-                        },
-                    }
-                });
-            } else {
-                this.setState({
-                    chartOptions: {
-                        series: [],
-                        xAxis: {}
-                    }
-                });
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-        .then( () => {
-            // Hide the ajax processing overlay
-            this.setState({
-                showOverlay: false,
-                needDataUpdate: false,
-            });
-        });
-    }
-    // END refreshData() {
-
     // Create the HTML to be drawn on the page
     render() {
         const { chartOptions } = this.state;
 
         return (
             <div>
-                {/* Form overlay to visually indicate activity is occuring to the user */}
+                {/* Form overlay to visually indicate activity is occurring to the user */}
                 <LoadingOverlay
                     active={this.state.showOverlay}
                     spinner
                     text='Working...'
                     >
+                    {/* Render Highchart graph */}
                     <HighchartsReact
                         highcharts={Highcharts}
                         options={chartOptions}
@@ -143,10 +93,11 @@ export default class BaseChart extends Component {
                         <i className="fas fa-bars mr-3"></i>
                         Chart filter options
                     </button>
+                    {/* END Render Highchart graph */}
                 </LoadingOverlay>
-                {/* END Form overlay to visually indicate activity is occuring to the user */}
+                {/* END Form overlay to visually indicate activity is occurring to the user */}
 
-                {/* Line chart filter options modal */}
+                {/* Graph filter options modal */}
                 <div>
                     <FormModal
                         isOpen={this.state.isFilterModalOpen}
@@ -156,6 +107,7 @@ export default class BaseChart extends Component {
                         modalAppElement="#react-charts"
                         styleOverride={ new Object({width: '40%', left: '35%',}) }
                         >
+                        {/* Graph filter options form */}
                         <form>
                             <div className="form-group">
                                 <label className="mr-sm-2" htmlFor="districtFilter">Store</label>
@@ -167,11 +119,11 @@ export default class BaseChart extends Component {
                             </div>
                             <button className="btn btn-primary mb-3" onClick={this.toggleFilterModal}>Apply</button>
                         </form>
+                        {/* END Graph filter options form */}
 
                     </FormModal>
                 </div>
-                {/* END Line chart filter options */}
-
+                {/* END Graph filter options modal */}
             </div>
         )
     }

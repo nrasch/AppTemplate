@@ -85836,11 +85836,20 @@ function (_Component) {
   } // END constructor(props) {
 
   /**
-  * Shows/hides the charter filter modal
+  * Actions to take once the component has mounted
   */
 
 
   _createClass(BaseChart, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.refreshData();
+    }
+    /**
+    * Shows/hides the chart filter modal
+    */
+
+  }, {
     key: "toggleFilterModal",
     value: function toggleFilterModal() {
       // If a filter has been selected refresh the chart data
@@ -85854,15 +85863,6 @@ function (_Component) {
       });
     }
     /**
-    * Actions to take once the component has mounted
-    */
-
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.refreshData();
-    }
-    /**
     * Save any user selected filters in the state
     */
 
@@ -85872,57 +85872,7 @@ function (_Component) {
       var _this$setState;
 
       this.setState((_this$setState = {}, _defineProperty(_this$setState, event.target.id, event.target.value), _defineProperty(_this$setState, "needDataUpdate", true), _this$setState));
-    }
-    /**
-    * Make an ajax call to the backend to fetch data for the graph
-    */
-
-  }, {
-    key: "refreshData",
-    value: function refreshData() {
-      var _this2 = this;
-
-      // Show the overlay while the ajax request is processing
-      this.setState({
-        showOverlay: true
-      }); // Utilize axios to make the ajax call to the backend
-
-      axios.get('/charts/get_sales', {
-        // Include any query filters
-        params: {
-          district: this.state.districtFilter
-        }
-      }).then(function (response) {
-        if (response.data.data) {
-          _this2.setState({
-            // Update the chart's series which will refresh it
-            chartOptions: {
-              colors: ["#7cb5ec", "#434348"],
-              series: response.data.data.series,
-              xAxis: {
-                categories: response.data.data.categories
-              }
-            }
-          });
-        } else {
-          _this2.setState({
-            chartOptions: {
-              series: [],
-              xAxis: {}
-            }
-          });
-        }
-      })["catch"](function (error) {
-        console.log(error);
-      }).then(function () {
-        // Hide the ajax processing overlay
-        _this2.setState({
-          showOverlay: false,
-          needDataUpdate: false
-        });
-      });
-    } // END refreshData() {
-    // Create the HTML to be drawn on the page
+    } // Create the HTML to be drawn on the page
 
   }, {
     key: "render",
@@ -86146,7 +86096,7 @@ function (_BaseChart) {
           needDataUpdate: false
         });
       });
-    } // END refreshData() {
+    } // END refreshData()
 
   }]);
 
@@ -86515,7 +86465,7 @@ function (_BaseChart) {
     }; // END this.state
 
     return _this;
-  } // END constructor(props) {
+  } // END constructor(props)
 
   /**
   * Make an ajax call to the backend to fetch data for the graph
@@ -86562,7 +86512,7 @@ function (_BaseChart) {
           needDataUpdate: false
         });
       });
-    } // END refreshData() {
+    } // END refreshData()
 
   }]);
 
@@ -86713,7 +86663,6 @@ function (_BaseChart) {
           _this2.setState({
             // Update the chart's series which will refresh it
             chartOptions: {
-              colors: ["#7cb5ec", "#434348"],
               series: response.data.data.series,
               xAxis: {
                 categories: response.data.data.categories
@@ -86737,7 +86686,7 @@ function (_BaseChart) {
           needDataUpdate: false
         });
       });
-    } // END refreshData() {
+    } // END refreshData()
 
   }]);
 

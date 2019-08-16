@@ -110,7 +110,6 @@ export default class SalesChart extends BaseChart {
                 this.setState({
                     // Update the chart's series which will refresh it
                     chartOptions: {
-                        colors: ["#7cb5ec", "#434348"],
                         series: response.data.data.series,
                         xAxis: {
                             categories: response.data.data.categories,

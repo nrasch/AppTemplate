@@ -5,20 +5,20 @@ import Modal from 'react-modal';
 // Modal settings
 Modal.defaultStyles.overlay.backgroundColor = 'rgba(0,0,0,0.4)';
 const modalContentStyle = {
-  overlay: {
-    zIndex: 1000
-  },
-  content : {
-    top                   : '25%',
-    left                  : '27%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    width									: '60%',
-    marginTop							: '-50px',
-    marginLeft						: '-50px',
-    backgroundColor				: '#fefefe',
-  }
+    overlay: {
+        zIndex: 1000
+    },
+    content : {
+        top                 : '25%',
+        left                : '27%',
+        right               : 'auto',
+        bottom              : 'auto',
+        marginRight         : '-50%',
+        width               : '60%',
+        marginTop           : '-50px',
+        marginLeft          : '-50px',
+        backgroundColor     : '#fefefe',
+    }
 };
 // END Modal settings
 
