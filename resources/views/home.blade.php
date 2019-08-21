@@ -515,6 +515,10 @@
         </div>
     </div>
 
+    <!-- React example binding  -->
+    <div class="mt-5" id="example" />
+    <!-- END React example binding  -->
+
 </div>
 @endsection
 

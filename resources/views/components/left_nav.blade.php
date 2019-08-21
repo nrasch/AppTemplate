@@ -7,5 +7,6 @@
     <a href="#" class="list-group-item list-group-item-action bg-light"><i class="far fa-calendar-check mr-2"></i>Events</a>
     <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-user mr-2"></i>Profile</a>
     <a href="#" class="list-group-item list-group-item-action bg-light"><i class="fas fa-info-circle mr-2"></i>Status</a>
+    <a href="/users" class="list-group-item list-group-item-action bg-light"><i class="fas fa-users mr-2"></i>Users</a>
   </div>
 </div>
