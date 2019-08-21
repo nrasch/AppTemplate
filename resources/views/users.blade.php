@@ -2,7 +2,9 @@
 
 @section('content')
     <!-- React User manager  -->
-    <div class="mt-5" id="users" />
+    <div class="container-fluid">
+        <div class="mt-5" id="users" />
+    </div>
 @endsection
 
 @section('js_after')

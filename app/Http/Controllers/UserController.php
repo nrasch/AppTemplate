@@ -82,4 +82,22 @@ class UserController extends Controller
     {
         //
     }
+
+    /**
+     * Fetch and return a JSON array of Users
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getUsers()
+    {
+        // Use 'with' option to enable eager loading for the user roles
+        $users = User::with('roles')->get();
+
+        sleep(1);
+
+        // Return JSON response
+        return response()->json(['data' => $users]);
+    }
+
 }
