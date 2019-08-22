@@ -95118,27 +95118,27 @@ if (token) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Index; });
-/* harmony import */ var react_bootstrap_table_next_dist_react_bootstrap_table2_min_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-bootstrap-table-next/dist/react-bootstrap-table2.min.css */ "./node_modules/react-bootstrap-table-next/dist/react-bootstrap-table2.min.css");
-/* harmony import */ var react_bootstrap_table_next_dist_react_bootstrap_table2_min_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table_next_dist_react_bootstrap_table2_min_css__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_bootstrap_table2_paginator_dist_react_bootstrap_table2_paginator_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css */ "./node_modules/react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css");
-/* harmony import */ var react_bootstrap_table2_paginator_dist_react_bootstrap_table2_paginator_min_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_paginator_dist_react_bootstrap_table2_paginator_min_css__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_bootstrap_table2_toolkit_dist_react_bootstrap_table2_toolkit_min_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css */ "./node_modules/react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css");
-/* harmony import */ var react_bootstrap_table2_toolkit_dist_react_bootstrap_table2_toolkit_min_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_toolkit_dist_react_bootstrap_table2_toolkit_min_css__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap-table-next */ "./node_modules/react-bootstrap-table-next/lib/index.js");
-/* harmony import */ var react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap-table2-paginator */ "./node_modules/react-bootstrap-table2-paginator/lib/index.js");
-/* harmony import */ var react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap-table2-toolkit */ "./node_modules/react-bootstrap-table2-toolkit/lib/index.js");
-/* harmony import */ var react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap-table2-overlay */ "./node_modules/react-bootstrap-table2-overlay/lib/index.js");
-/* harmony import */ var react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _TableExportAndSearch__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./TableExportAndSearch */ "./resources/js/components/TableExportAndSearch.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _TableExportAndSearch__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TableExportAndSearch */ "./resources/js/components/TableExportAndSearch.js");
+/* harmony import */ var react_bootstrap_table_next_dist_react_bootstrap_table2_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap-table-next/dist/react-bootstrap-table2.min.css */ "./node_modules/react-bootstrap-table-next/dist/react-bootstrap-table2.min.css");
+/* harmony import */ var react_bootstrap_table_next_dist_react_bootstrap_table2_min_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table_next_dist_react_bootstrap_table2_min_css__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_bootstrap_table2_paginator_dist_react_bootstrap_table2_paginator_min_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css */ "./node_modules/react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css");
+/* harmony import */ var react_bootstrap_table2_paginator_dist_react_bootstrap_table2_paginator_min_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_paginator_dist_react_bootstrap_table2_paginator_min_css__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_bootstrap_table2_toolkit_dist_react_bootstrap_table2_toolkit_min_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css */ "./node_modules/react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css");
+/* harmony import */ var react_bootstrap_table2_toolkit_dist_react_bootstrap_table2_toolkit_min_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_toolkit_dist_react_bootstrap_table2_toolkit_min_css__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap-table-next */ "./node_modules/react-bootstrap-table-next/lib/index.js");
+/* harmony import */ var react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap-table2-paginator */ "./node_modules/react-bootstrap-table2-paginator/lib/index.js");
+/* harmony import */ var react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap-table2-toolkit */ "./node_modules/react-bootstrap-table2-toolkit/lib/index.js");
+/* harmony import */ var react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-bootstrap-table2-overlay */ "./node_modules/react-bootstrap-table2-overlay/lib/index.js");
+/* harmony import */ var react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_10__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -95159,9 +95159,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+// Standard import items
 
 
+ // Our custom components
 
+ // React BootstrapTable import items
 
 
 
@@ -95184,7 +95187,9 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Index).call(this, props));
     _this.state = {
+      // Container for data fetched from the backend
       userData: [],
+      // Track if we have an outstanding call to the backend in progress
       loading: false
     }; //Bindings
 
@@ -95209,7 +95214,7 @@ function (_Component) {
         loading: true
       }); // Make ajax call to backend to fetch user data
 
-      axios__WEBPACK_IMPORTED_MODULE_5___default.a.get('/get_users').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/get_users').then(function (response) {
         // If data was returned assign to state userData variable
         // otherwise assign an empty array to the userData variable
         if (response.data) {
@@ -95241,14 +95246,26 @@ function (_Component) {
     // Called by the user data table below
 
   }, {
-    key: "roleFormatter",
-    value: function roleFormatter(cell, row) {
-      return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("span", null, cell.map(function (val, index) {
-        return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("span", {
+    key: "roleTableFormatter",
+    value: function roleTableFormatter(cell, row) {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, cell.map(function (val, index) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           key: index,
           className: "badge badge-primary mr-2"
         }, val.name);
       }));
+    } // Extract the user's role(s) into a comma delimited string
+    // Called by the user data table below
+
+  }, {
+    key: "roleCSVFormatter",
+    value: function roleCSVFormatter(cell, row, rowIndex) {
+      var roles = cell.map(function (val, index) {
+        return val.name;
+      }); // Note the backticks below... template literals
+      // Ref:  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+
+      return "".concat(roles.join(","));
     } // Examine this.props and this.state and return class response (typicall React elements)
 
   }, {
@@ -95259,7 +95276,7 @@ function (_Component) {
       // Configure what should be shown if no data is returned from the ajax calll
       // Ref https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/overlay.html
       var NoDataIndication = function NoDataIndication() {
-        return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("span", {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
           className: "font-italic"
         }, "No data found....");
       }; // Define data table columns and which data fields the values should come from
@@ -95281,17 +95298,17 @@ function (_Component) {
         dataField: 'roles',
         text: 'Roles',
         sort: true,
-        formatter: this.roleFormatter,
-        csvType: String
+        formatter: this.roleTableFormatter,
+        csvFormatter: this.roleCSVFormatter
       }]; // Prepare and return React elements
 
-      return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card"
-      }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
-      }, "User Index"), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", {
+      }, "User Index"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
-      }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_8___default.a, {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_9___default.a, {
         bootstrap4: true,
         keyField: "id",
         data: this.state.userData,
@@ -95299,37 +95316,38 @@ function (_Component) {
         search: true,
         exportCSV: true
       }, function (props) {
-        return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("button", {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
           type: "button",
           className: "btn btn-outline-success",
           onClick: _this3.toggleCreateModal
-        }, react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement("i", {
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
           className: "fa fa-fw fa-plus"
-        }), " Create User")), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(_TableExportAndSearch__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        }), " Create User")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TableExportAndSearch__WEBPACK_IMPORTED_MODULE_3__["default"], {
           csvProps: props.csvProps,
           searchProps: props.searchProps
-        }), react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_6___default.a, _extends({}, props.baseProps, {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_7___default.a, _extends({}, props.baseProps, {
           loading: _this3.state.loading,
-          pagination: react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_7___default()(),
+          pagination: react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_8___default()(),
           striped: true,
           bordered: true,
           hover: true,
           rowClasses: "font-size-sm",
           noDataIndication: function noDataIndication() {
-            return react__WEBPACK_IMPORTED_MODULE_3___default.a.createElement(NoDataIndication, null);
+            return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NoDataIndication, null);
           },
-          overlay: react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_9___default()({
+          overlay: react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_10___default()({
             spinner: true,
             background: 'rgba(220,220,220,0.3)',
             text: 'Loading....'
           })
         })));
       }))));
-    }
+    } // END render
+
   }]);
 
   return Index;
-}(react__WEBPACK_IMPORTED_MODULE_3__["Component"]);
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
 
