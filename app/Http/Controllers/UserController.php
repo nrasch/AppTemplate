@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use App\Http\Requests\UserFormRequest;
 
 class UserController extends Controller
 {
@@ -18,46 +20,27 @@ class UserController extends Controller
 	}
 
 	/**
-	* Show the form for creating a new resource.
-	*
-	* @return \Illuminate\Http\Response
-	*/
-	public function create()
-	{
-		//
-	}
-
-	/**
 	* Store a newly created resource in storage.
 	*
-	* @param  \Illuminate\Http\Request  $request
-	* @return \Illuminate\Http\Response
+	* @param App\Http\Requests\UserFormRequest $request
+	* @return \Illuminate\Http\JsonResponse
 	*/
-	public function store(Request $request)
+	public function store(UserFormRequest $request)
 	{
-		//
-	}
+		// Create the user based on request param values
+		$user = User::create($request->all());
 
-	/**
-	* Display the specified resource.
-	*
-	* @param  \App\User  $user
-	* @return \Illuminate\Http\Response
-	*/
-	public function show(User $user)
-	{
-		//
-	}
+		// Assign role(s) to user
+		$roles = $request->input('roles') ? $request->input('roles') : [];
+		$user->assignRole($roles);
 
-	/**
-	* Show the form for editing the specified resource.
-	*
-	* @param  \App\User  $user
-	* @return \Illuminate\Http\Response
-	*/
-	public function edit(User $user)
-	{
-		//
+		// Create response to view
+		$response['result']['type'] = 'success';
+    $response['result']['message'] = 'The user was successfuly created!';
+    $response['data'] = $user->__toString();
+
+		// Return JSON response
+    return response()->json($response);
 	}
 
 	/**
@@ -86,7 +69,6 @@ class UserController extends Controller
 	/**
 	* Fetch and return a JSON array of Users
 	*
-	* @param  \App\User  $user
 	* @return \Illuminate\Http\JsonResponse
 	*/
 	public function getUsers()
@@ -102,6 +84,26 @@ class UserController extends Controller
 
 		// Return JSON response
 		return response()->json(['data' => $users]);
+	}
+
+	/**
+	* Fetch and return a JSON array of Roles
+	*
+	* @return \Illuminate\Http\JsonResponse
+	*/
+	public function getRoles()
+	{
+		// Use 'with' option to enable eager loading for the user roles
+		$roles = Role::get();
+
+		// Uncomment line below to simulate no data returned
+		//$roles = array();
+
+		// We have a sleep here so we can observe the loading overlay in the view
+		sleep(1);
+
+		// Return JSON response
+		return response()->json(['data' => $roles]);
 	}
 
 }

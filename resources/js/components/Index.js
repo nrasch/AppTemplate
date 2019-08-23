@@ -1,10 +1,12 @@
 // Standard import items
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
 
 // Our custom components
 import TableExportAndSearch from './TableExportAndSearch';
+import TableActions from './TableActions';
+import CreateForm from './CreateForm'
+import FormModal from './FormModal'
 
 // React BootstrapTable import items
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
@@ -29,10 +31,19 @@ export default class Index extends Component {
 			userData: [],
 			// Track if we have an outstanding call to the backend in progress
 			loading: false,
+
+			user: null,
+
+			modalsOpen: {
+				create: false,
+				edit: false,
+				delete: false,
+			}
 		};
 
 		//Bindings
 		this.fetchUserData = this.fetchUserData.bind(this);
+		this.toggleModal = this.toggleModal.bind(this);
 	}
 
 	// Actions to take once the component loads
@@ -77,9 +88,20 @@ export default class Index extends Component {
 	}
 	// END fetchUserData()
 
-	// Show/hide the create new user modal
-	toggleCreateModal() {
-		//
+	// Show/hide the create/edit/delete modals and track which user we are taking action on
+	toggleModal(modal, user) {
+		const currentModalState = this.state.modalsOpen[modal];
+
+		if (this.state.modalsOpen[modal]) {
+			this.fetchUserData();
+		}
+
+		this.setState({
+			modalsOpen: {
+				[modal]: !currentModalState
+			},
+			user: user,
+		});
 	}
 
 	// Wrap the user's role(s) in a bootstrap badge element
@@ -107,7 +129,7 @@ export default class Index extends Component {
 	}
 
 
-	// Examine this.props and this.state and return class response (typicall React elements)
+	// Examine this.props and this.state and return class response (typical React elements)
 	render() {
 
 		// Configure what should be shown if no data is returned from the ajax calll
@@ -116,7 +138,27 @@ export default class Index extends Component {
 			<span className="font-italic">No data found....</span>
 		);
 
+		// Define a list of actions we want to be able to take on a given user
+		// These are displayed in the datatables's dummy 'Action' column which is defined below
+		const actions = [
+			{
+				title: "Edit User",
+				onClick: this.toggleModal,
+				modelType: 'edit',
+				class: "text-secondary",
+				icon: "fa fa-fs fa-pencil-alt",
+			},
+			{
+				title: "Delete User",
+				onClick: this.toggleModal,
+				modelType: 'delete',
+				class: "text-danger",
+				icon: "fa fa-fs fa-trash",
+			}
+		];
+
 		// Define data table columns and which data fields the values should come from
+		// Note we also add the 'Actions' dummy column that utilizes the 'const actions' we defined above
 		const columns = [
 			{
 				dataField: 'id',
@@ -136,8 +178,20 @@ export default class Index extends Component {
 				sort:true,
 				formatter: this.roleTableFormatter,
 				csvFormatter: this.roleCSVFormatter,
+			}, {
+				// Create a custom, dummy column with clickable icons to edit and delete the row's user
+				// Example here:  https://react-bootstrap-table.github.io/react-bootstrap-table2/storybook/index.html?selectedKind=Work%20on%20Columns&selectedStory=Dummy%20Column&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Factions%2Factions-panel
+				dataField: 'actions',
+				isDummyField: true,
+				text: 'Actions',
+				formatter: (cell, row) => {
+					return (
+						<TableActions item={ row } actions={ actions } />
+					);
+				},
+				sort: false,
+				csvExport: false,
 			},
-
 		];
 
 		// Prepare and return React elements
@@ -166,7 +220,7 @@ export default class Index extends Component {
 									<div>
 										{/* Show/hide create user modal */}
 										<div>
-											<button type="button" className="btn btn-outline-success" onClick={this.toggleCreateModal}>
+											<button type="button" className="btn btn-outline-success" onClick={ (e) => this.toggleModal('create', null) }>
 											<i className="fa fa-fw fa-plus"></i> Create User
 											</button>
 										</div>
@@ -200,6 +254,23 @@ export default class Index extends Component {
 
 					</div>
 					{/* END Card div */}
+
+
+					{/* Create user form modal */}
+					<div>
+						<FormModal
+							isOpen={this.state.modalsOpen['create']}
+							onRequestClose={ (e) => this.toggleModal('create', null) }
+							contentLabel="Create User"
+							title="Create User"
+							modalAppElement="#users"
+							styleOverride={ new Object({width: '40%', left: '35%',}) }
+						>
+							{/* Define and render the actual create user form  */}
+							<CreateForm onClose={ (e) => this.toggleModal('create', null) } onUpdate={ this.fetchUserData } />
+						</FormModal>
+					</div>
+					{/* END Create form modal */}
 
 				</div>
 		);

@@ -9,6 +9,7 @@ export default class Users extends Component {
 			<div>
 				<div className="row justify-content-center">
 					<div className="col-12">
+						{/* Load the Index component */}
 						<Index />
 					</div>
 				</div>
