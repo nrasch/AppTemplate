@@ -77,6 +77,7 @@ export default class CreateForm extends Component {
 					<Formik
 						initialValues={{
 							name: '',
+							email: '',
 							password: '',
 							password_confirmation: '',
 							roles: [1],
@@ -100,6 +101,11 @@ export default class CreateForm extends Component {
 									this.setState({
 										requestResult: response.data.result,
 									});
+
+									// Reset the form if the user was created successfully
+									if (response.data.result.type == 'success') {
+										actions.resetForm(this.props.initialValues);
+									}
 								};
 							})
 							.catch( error => {
@@ -122,7 +128,8 @@ export default class CreateForm extends Component {
 										// Define flash message to show user
 										data = {
 											type: 'danger',
-											message: <p className="mb-0"><i className="far fa-frown ml-1"></i>&nbsp;&nbsp;Unable to complete request.  Please correct the problems below.</p>,
+											message: <p className="mb-0"><i className="far fa-frown ml-1">
+												</i>&nbsp;&nbsp;Unable to complete request.  Please correct the problems below.</p>,
 										};
 									}
 								}
@@ -131,7 +138,8 @@ export default class CreateForm extends Component {
 								if (_.isEmpty(data)) {
 									data = {
 										type: 'danger',
-										message: <p className="mb-0"><i className="far fa-frown ml-1"></i>&nbsp;&nbsp;Error:  Unable to process your request at this time.  Please try again later.</p>,
+										message: <p className="mb-0"><i className="far fa-frown ml-1">
+											</i>&nbsp;&nbsp;Error:  Unable to process your request at this time.  Please try again later.</p>,
 									};
 								}
 
@@ -162,8 +170,8 @@ export default class CreateForm extends Component {
 
 							<Form className="mb-5">
 
+								{/* Form data fields (name, email, password, etc.) */}
 								<div className="col-lg-8 col-xl-5">
-
 									<div className="form-group">
 										<label htmlFor="name">Name<span className="text-danger">*</span></label>
 										<Field
@@ -173,6 +181,17 @@ export default class CreateForm extends Component {
 											placeholder="User's Name..."
 											/>
 										<ErrorMessage name="name" component="div" className="invalid-feedback font-weight-bold" />
+									</div>
+
+									<div className="form-group">
+										<label htmlFor="email">Email<span className="text-danger">*</span></label>
+										<Field
+											name="email"
+											type="email"
+											className={ "form-control " + (errors.email && touched.email ? 'is-invalid' : null) }
+											placeholder="User's Email..."
+											/>
+										<ErrorMessage name="email" component="div" className="invalid-feedback font-weight-bold" />
 									</div>
 
 									<div className="form-group">
@@ -222,6 +241,7 @@ export default class CreateForm extends Component {
 									</div>
 
 								</div>
+								{/* END Form data fields (name, email, password, etc.) */}
 
 								{/* Form submit/close buttons */}
 								<div className="form-group ml-3 mt-4">

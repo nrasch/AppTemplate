@@ -46,7 +46,7 @@ class UserFormRequest extends FormRequest
 					'email' => [
 							'required',
 							'email',
-							Rule::unique('users')->ignore($this->route('user')->id),
+							Rule::unique('users')->ignore($this->route('id')),
 					],
 					'password' => 'sometimes|confirmed',
 				]
@@ -58,4 +58,5 @@ class UserFormRequest extends FormRequest
 		}
 
 		return $rules;
+	}
 }

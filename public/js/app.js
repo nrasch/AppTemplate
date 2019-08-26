@@ -114294,6 +114294,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(formik__WEBPACK_IMPORTED_MODULE_2__["Formik"], {
         initialValues: {
           name: '',
+          email: '',
           password: '',
           password_confirmation: '',
           roles: [1]
@@ -114313,7 +114314,12 @@ function (_Component) {
               // Store the data/message/etc sent back by the server in the state
               _this2.setState({
                 requestResult: response.data.result
-              });
+              }); // Reset the form if the user was created successfully
+
+
+              if (response.data.result.type == 'success') {
+                actions.resetForm(_this2.props.initialValues);
+              }
             }
 
             ;
@@ -114399,6 +114405,21 @@ function (_Component) {
           placeholder: "User's Name..."
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
           name: "name",
+          component: "div",
+          className: "invalid-feedback font-weight-bold"
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-group"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          htmlFor: "email"
+        }, "Email", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          className: "text-danger"
+        }, "*")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
+          name: "email",
+          type: "email",
+          className: "form-control " + (errors.email && touched.email ? 'is-invalid' : null),
+          placeholder: "User's Email..."
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(formik__WEBPACK_IMPORTED_MODULE_2__["ErrorMessage"], {
+          name: "email",
           component: "div",
           className: "invalid-feedback font-weight-bold"
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
