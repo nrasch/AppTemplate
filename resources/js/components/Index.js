@@ -96,6 +96,8 @@ export default class Index extends Component {
 			this.fetchUserData();
 		}
 
+		// Note the brackets around the word 'modal'
+		// Computed properties:  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names
 		this.setState({
 			modalsOpen: {
 				[modal]: !currentModalState

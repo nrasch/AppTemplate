@@ -34,13 +34,13 @@ class UserController extends Controller
 		$roles = $request->input('roles') ? $request->input('roles') : [];
 		$user->assignRole($roles);
 
-		// Create response to view
+		// Create response to be returned to the view
 		$response['result']['type'] = 'success';
-    $response['result']['message'] = 'The user was successfuly created!';
-    $response['data'] = $user->__toString();
+		$response['result']['message'] = 'The user was successfully created!';
+		$response['data'] = $user->__toString();
 
 		// Return JSON response
-    return response()->json($response);
+		return response()->json($response);
 	}
 
 	/**
@@ -85,25 +85,4 @@ class UserController extends Controller
 		// Return JSON response
 		return response()->json(['data' => $users]);
 	}
-
-	/**
-	* Fetch and return a JSON array of Roles
-	*
-	* @return \Illuminate\Http\JsonResponse
-	*/
-	public function getRoles()
-	{
-		// Use 'with' option to enable eager loading for the user roles
-		$roles = Role::get();
-
-		// Uncomment line below to simulate no data returned
-		//$roles = array();
-
-		// We have a sleep here so we can observe the loading overlay in the view
-		sleep(1);
-
-		// Return JSON response
-		return response()->json(['data' => $roles]);
-	}
-
 }

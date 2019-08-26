@@ -52,10 +52,6 @@ class UserFormRequest extends FormRequest
 				]
 			);
 		}
-		// Return false for any other method
-		else {
-			return false;
-		}
 
 		return $rules;
 	}

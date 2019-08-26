@@ -12,9 +12,11 @@ const modalContentStyle = {
     bottom                : 'auto',
     marginRight           : '-50%',
     width									: '60%',
-    marginTop							: '-50px',
+    height                : '80%;',
+    marginTop							: '-10%',
     marginLeft						: '-50px',
     backgroundColor				: '#fefefe',
+    overflow              : 'auto',
   }
 };
 // END Modal settings
