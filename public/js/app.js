@@ -114242,7 +114242,7 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(CreateForm).call(this, props));
     _this.state = {
-      // Show/hide Laravel sytle flash messages regarding actions taken on the page
+      // Show/hide Laravel style flash messages regarding actions taken on the page
       showFlashMessage: false,
       // Container for request response data/message/etc sent back by the server
       requestResult: null,
@@ -114616,7 +114616,7 @@ var modalContentStyle = {
     bottom: 'auto',
     marginRight: '-50%',
     width: '60%',
-    height: '80%;',
+    height: '80%',
     marginTop: '-10%',
     marginLeft: '-50px',
     backgroundColor: '#fefefe',
@@ -114830,7 +114830,9 @@ function (_Component) {
 
       if (this.state.modalsOpen[modal]) {
         this.fetchUserData();
-      }
+      } // Note the brackets around the word 'modal'
+      // Computed properties:  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names
+
 
       this.setState({
         modalsOpen: _defineProperty({}, modal, !currentModalState),
@@ -115047,8 +115049,6 @@ function (_React$Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.props.actions.map(function (action, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
-          "data-toggle": "tooltip",
-          "data-placement": "top",
           title: action.title,
           key: index,
           onClick: function onClick(e) {

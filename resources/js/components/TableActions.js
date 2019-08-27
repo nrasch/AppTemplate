@@ -9,8 +9,6 @@ export default class TableActions extends React.Component {
 				{ this.props.actions.map( (action, index) => {
 					return(
 						<span
-							data-toggle="tooltip"
-							data-placement="top"
 							title={ action.title }
 							key={ index }
 							onClick={ (e) => action.onClick(action.modalType, this.props.item) }

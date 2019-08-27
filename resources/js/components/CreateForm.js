@@ -18,7 +18,7 @@ export default class CreateForm extends Component {
 		super(props);
 
 		this.state = {
-			// Show/hide Laravel sytle flash messages regarding actions taken on the page
+			// Show/hide Laravel style flash messages regarding actions taken on the page
 			showFlashMessage: false,
 			// Container for request response data/message/etc sent back by the server
 			requestResult: null,
@@ -64,7 +64,7 @@ export default class CreateForm extends Component {
 				<FlashMessage show={ this.state.showFlashMessage } result={ this.state.requestResult } />
 				{/* END Display Laravel style flash messages in response to page actions */}
 
-				{/* Form overlay to visually indicate activity is occuring to the user */}
+				{/* Form overlay to visually indicate activity is occurring to the user */}
 				<LoadingOverlay
 					active={this.state.showOverlay}
 					spinner
@@ -271,7 +271,7 @@ export default class CreateForm extends Component {
 				{/* END Form block */}
 
 				</LoadingOverlay>
-				{/* END Form overlay to visually indicate activity is occuring to the user */}
+				{/* END Form overlay to visually indicate activity is occurring to the user */}
 
 			</div>
 		);
