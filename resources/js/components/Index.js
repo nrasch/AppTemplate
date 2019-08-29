@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import TableExportAndSearch from './TableExportAndSearch';
 import TableActions from './TableActions';
 import CreateForm from './CreateForm'
+import EditForm from './EditForm'
 import FormModal from './FormModal'
 
 // React BootstrapTable import items
@@ -146,14 +147,14 @@ export default class Index extends Component {
 			{
 				title: "Edit User",
 				onClick: this.toggleModal,
-				modelType: 'edit',
+				modalType: 'edit',
 				class: "text-secondary",
 				icon: "fa fa-fs fa-pencil-alt",
 			},
 			{
 				title: "Delete User",
 				onClick: this.toggleModal,
-				modelType: 'delete',
+				modalType: 'delete',
 				class: "text-danger",
 				icon: "fa fa-fs fa-trash",
 			}
@@ -272,7 +273,27 @@ export default class Index extends Component {
 							<CreateForm onClose={ (e) => this.toggleModal('create', null) } onUpdate={ this.fetchUserData } />
 						</FormModal>
 					</div>
-					{/* END Create form modal */}
+					{/* END Create user form modal */}
+
+					{/* Edit user form modal */}
+					<div>
+						<FormModal
+							isOpen={ this.state.modalsOpen['edit'] }
+							onRequestClose={ (e) => this.toggleModal('edit', this.state.user) }
+							contentLabel="Edit User"
+							title="Edit User"
+							modalAppElement="#users"
+							styleOverride={ new Object({width: '40%', left: '35%',}) }
+						>
+							{/* Define and render the actual edit user form  */}
+							<EditForm
+								onClose={ (e) => this.toggleModal('edit', this.state.user) }
+								onUpdate={ this.fetchUserData }
+								user={ this.state.user }
+							/>
+						</FormModal>
+					</div>
+					{/* END Edit user form modal */}
 
 				</div>
 		);

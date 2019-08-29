@@ -46,13 +46,40 @@ class UserController extends Controller
 	/**
 	* Update the specified resource in storage.
 	*
-	* @param  \Illuminate\Http\Request  $request
-	* @param  \App\User  $user
-	* @return \Illuminate\Http\Response
+	* @param App\Http\Requests\UserFormRequest $request
+	* @param  integer  $id
+	* @return \Illuminate\Http\JsonResponse
 	*/
-	public function update(Request $request, User $user)
+	public function update(UserFormRequest $request, $id)
+	//public function update(Request $request, $id)
 	{
-		//
+		// Pull the user record from the database
+		$user = User::findOrFail($id);
+
+		// Check to see if we're updating the user's password
+		if ($request->has('password')) {
+			$user->fill($request->all());
+		}
+		// If the password field is blank skip it; we aren't
+		// replacing it with a new one
+		else {
+				$user->fill($request->except(['password', 'password_confirmation']));
+		}
+
+		// Save the user record to the database
+		$user->save();
+
+		// Update the user's roles and permissions
+		$roles = $request->input('roles') ? $request->input('roles') : [];
+		$user->syncRoles($roles);
+
+		// Create response to be returned to the view
+		$response['result']['type'] = 'success';
+		$response['result']['message'] = 'The user was successfully updated!';
+		$response['data'] = $user->__toString();
+
+		// Return JSON response
+		return response()->json($response);
 	}
 
 	/**
