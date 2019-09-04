@@ -114503,6 +114503,255 @@ function (_Component) {
 
 /***/ }),
 
+/***/ "./resources/js/components/DeleteForm.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/DeleteForm.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DeleteForm; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! formik */ "./node_modules/formik/dist/formik.esm.js");
+/* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! yup */ "./node_modules/yup/lib/index.js");
+/* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(yup__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_loading_overlay__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-loading-overlay */ "./node_modules/react-loading-overlay/lib/LoadingOverlay.js");
+/* harmony import */ var react_loading_overlay__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_loading_overlay__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lodash/isEmpty */ "./node_modules/lodash/isEmpty.js");
+/* harmony import */ var lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _FlashMessage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FlashMessage */ "./resources/js/components/FlashMessage.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+// Standard import items
+
+ // Formik table related imports
+
+
+
+
+ // Our custom components
+
+
+
+var DeleteForm =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(DeleteForm, _Component);
+
+  function DeleteForm(props) {
+    var _this;
+
+    _classCallCheck(this, DeleteForm);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(DeleteForm).call(this, props));
+    _this.state = {
+      // Show/hide Laravel style flash messages regarding actions
+      // taken on the page
+      showFlashMessage: false,
+      // Container for request response data/message/etc sent back
+      // by the server
+      requestResult: null,
+      // Show/hide the form overlay on ajax requests to notify the user
+      // activity is happening
+      showOverlay: false,
+      // Show/hide the delete confirmation form, 'cause it looks odd to
+      // still have it once the item is deleted
+      hideForm: false //Bindings
+
+    };
+    _this.hideFlashMessage = _this.hideFlashMessage.bind(_assertThisInitialized(_this));
+    return _this;
+  } // Actions to take once the component loads
+
+
+  _createClass(DeleteForm, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {} // Hide the the flash message at the top of the modal
+
+  }, {
+    key: "hideFlashMessage",
+    value: function hideFlashMessage() {
+      this.setState({
+        showFlashMessage: false
+      });
+    } // Examine this.props and this.state and return class response (typical React elements)
+
+  }, {
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      // If we choose to utilize form validation client side:
+      // const ValidationSchema = Yup.object().shape({
+      // 	name: Yup.string()
+      // 	.min(2, 'Too Short!')
+      // 	.max(50, 'Too Long!')
+      // 	.required('The name field is required.')
+      // });
+      // However, ror now we are going to utilize Laravel validation on the back end...
+      var ValidationSchema = yup__WEBPACK_IMPORTED_MODULE_3__["object"]().shape({}); // Prepare and return React elements
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FlashMessage__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        show: this.state.showFlashMessage,
+        result: this.state.requestResult
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_loading_overlay__WEBPACK_IMPORTED_MODULE_4___default.a, {
+        active: this.state.showOverlay,
+        spinner: true,
+        text: "Working..."
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        onClick: this.hideFlashMessage
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(formik__WEBPACK_IMPORTED_MODULE_2__["Formik"], {
+        initialValues: {
+          id: this.props.user.id
+        },
+        validationSchema: ValidationSchema,
+        onSubmit: function onSubmit(values, actions) {
+          // Show the overlay while the ajax request is processing
+          _this2.setState({
+            showOverlay: true
+          }); // Submit the request to the server and handle the response
+
+
+          axios["delete"]('/delete_user/' + _this2.props.user.id, values, {
+            timeout: 1000 * 10
+          }).then(function (response) {
+            if (response.data.result) {
+              // Store the data/message/etc sent back by the server in the state
+              _this2.setState({
+                requestResult: response.data.result,
+                hideForm: true
+              });
+            }
+
+            ;
+          })["catch"](function (error) {
+            // Init container for flash error message
+            var data = {}; // Is this a Laravel back end validation error?
+
+            if (typeof error.response !== 'undefined') {
+              if (error.response.status == '422') {
+                // Render the errors on the page's form's elements
+                actions.setErrors(error.response.data.errors); // Or if for some reason we wanted to set the field errors one-by-one:
+                // _.forOwn(error.response.data.errors, function(value, key) {
+                // 		actions.setFieldError(
+                // 			key, value,
+                // 		);
+                // });
+                // Define flash message to show user
+
+                data = {
+                  type: 'danger',
+                  message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+                    className: "mb-0"
+                  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+                    className: "far fa-frown ml-1"
+                  }), "\xA0\xA0Unable to complete request.  Please correct the problems below.")
+                };
+              }
+            } // Define flash message to show user if one hasn't already been set
+
+
+            if (_.isEmpty(data)) {
+              data = {
+                type: 'danger',
+                message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+                  className: "mb-0"
+                }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+                  className: "far fa-frown ml-1"
+                }), "\xA0\xA0Error:  Unable to process your request at this time.  Please try again later.")
+              };
+            } // Pass the flash message data to the flash message display component
+
+
+            _this2.setState({
+              requestResult: data
+            });
+          }).then(function () {
+            // Hide the ajax processing overlay
+            _this2.setState({
+              showOverlay: false
+            }); // Tell the form we are done submitting
+
+
+            actions.setSubmitting(false); // Show the flash message with the results of the page action
+
+            _this2.setState(function (state, props) {
+              return {
+                showFlashMessage: true
+              };
+            });
+          });
+        }
+      }, function (_ref) {
+        var errors = _ref.errors,
+            dirty = _ref.dirty,
+            status = _ref.status,
+            touched = _ref.touched,
+            isSubmitting = _ref.isSubmitting,
+            setFieldValue = _ref.setFieldValue;
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(formik__WEBPACK_IMPORTED_MODULE_2__["Form"], {
+          className: "mb-5",
+          hidden: _this2.state.hideForm
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "col-12"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-group text-center"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "text-warning fa fa-4x fa-question-circle mb-2"
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "h3"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Are you sure?")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "h5"
+        }, "You will be unable to recover this user's account!")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(formik__WEBPACK_IMPORTED_MODULE_2__["Field"], {
+          name: "id",
+          type: "hidden"
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "form-group ml-3 mt-4 text-center"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "submit",
+          className: "btn btn-outline-success",
+          disabled: isSubmitting || !lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5___default()(errors)
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fa fa-fw fa-plus mr-1"
+        }), " Delete User"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button",
+          className: "btn btn-outline-secondary ml-3",
+          onClick: _this2.props.onClose
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fa fa-times-circle mr-1"
+        }), " Close")));
+      }))));
+    }
+  }]);
+
+  return DeleteForm;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/EditForm.js":
 /*!*********************************************!*\
   !*** ./resources/js/components/EditForm.js ***!
@@ -115015,21 +115264,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TableActions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TableActions */ "./resources/js/components/TableActions.js");
 /* harmony import */ var _CreateForm__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CreateForm */ "./resources/js/components/CreateForm.js");
 /* harmony import */ var _EditForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./EditForm */ "./resources/js/components/EditForm.js");
-/* harmony import */ var _FormModal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FormModal */ "./resources/js/components/FormModal.js");
-/* harmony import */ var react_bootstrap_table_next_dist_react_bootstrap_table2_min_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap-table-next/dist/react-bootstrap-table2.min.css */ "./node_modules/react-bootstrap-table-next/dist/react-bootstrap-table2.min.css");
-/* harmony import */ var react_bootstrap_table_next_dist_react_bootstrap_table2_min_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table_next_dist_react_bootstrap_table2_min_css__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var react_bootstrap_table2_paginator_dist_react_bootstrap_table2_paginator_min_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css */ "./node_modules/react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css");
-/* harmony import */ var react_bootstrap_table2_paginator_dist_react_bootstrap_table2_paginator_min_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_paginator_dist_react_bootstrap_table2_paginator_min_css__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var react_bootstrap_table2_toolkit_dist_react_bootstrap_table2_toolkit_min_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css */ "./node_modules/react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css");
-/* harmony import */ var react_bootstrap_table2_toolkit_dist_react_bootstrap_table2_toolkit_min_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_toolkit_dist_react_bootstrap_table2_toolkit_min_css__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-bootstrap-table-next */ "./node_modules/react-bootstrap-table-next/lib/index.js");
-/* harmony import */ var react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-bootstrap-table2-paginator */ "./node_modules/react-bootstrap-table2-paginator/lib/index.js");
-/* harmony import */ var react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-bootstrap-table2-toolkit */ "./node_modules/react-bootstrap-table2-toolkit/lib/index.js");
-/* harmony import */ var react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-bootstrap-table2-overlay */ "./node_modules/react-bootstrap-table2-overlay/lib/index.js");
-/* harmony import */ var react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _DeleteForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./DeleteForm */ "./resources/js/components/DeleteForm.js");
+/* harmony import */ var _FormModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./FormModal */ "./resources/js/components/FormModal.js");
+/* harmony import */ var react_bootstrap_table_next_dist_react_bootstrap_table2_min_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap-table-next/dist/react-bootstrap-table2.min.css */ "./node_modules/react-bootstrap-table-next/dist/react-bootstrap-table2.min.css");
+/* harmony import */ var react_bootstrap_table_next_dist_react_bootstrap_table2_min_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table_next_dist_react_bootstrap_table2_min_css__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var react_bootstrap_table2_paginator_dist_react_bootstrap_table2_paginator_min_css__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css */ "./node_modules/react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css");
+/* harmony import */ var react_bootstrap_table2_paginator_dist_react_bootstrap_table2_paginator_min_css__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_paginator_dist_react_bootstrap_table2_paginator_min_css__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var react_bootstrap_table2_toolkit_dist_react_bootstrap_table2_toolkit_min_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css */ "./node_modules/react-bootstrap-table2-toolkit/dist/react-bootstrap-table2-toolkit.min.css");
+/* harmony import */ var react_bootstrap_table2_toolkit_dist_react_bootstrap_table2_toolkit_min_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_toolkit_dist_react_bootstrap_table2_toolkit_min_css__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react-bootstrap-table-next */ "./node_modules/react-bootstrap-table-next/lib/index.js");
+/* harmony import */ var react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! react-bootstrap-table2-paginator */ "./node_modules/react-bootstrap-table2-paginator/lib/index.js");
+/* harmony import */ var react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react-bootstrap-table2-toolkit */ "./node_modules/react-bootstrap-table2-toolkit/lib/index.js");
+/* harmony import */ var react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-bootstrap-table2-overlay */ "./node_modules/react-bootstrap-table2-overlay/lib/index.js");
+/* harmony import */ var react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_14__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
@@ -115055,6 +115305,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 // Standard import items
 
  // Our custom components
+
 
 
 
@@ -115253,7 +115504,7 @@ function (_Component) {
         className: "card-header"
       }, "User Index"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_12___default.a, {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_table2_toolkit__WEBPACK_IMPORTED_MODULE_13___default.a, {
         bootstrap4: true,
         keyField: "id",
         data: this.state.userData,
@@ -115272,9 +115523,9 @@ function (_Component) {
         }), " Create User")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TableExportAndSearch__WEBPACK_IMPORTED_MODULE_2__["default"], {
           csvProps: props.csvProps,
           searchProps: props.searchProps
-        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_10___default.a, _extends({}, props.baseProps, {
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_bootstrap_table_next__WEBPACK_IMPORTED_MODULE_11___default.a, _extends({}, props.baseProps, {
           loading: _this3.state.loading,
-          pagination: react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_11___default()(),
+          pagination: react_bootstrap_table2_paginator__WEBPACK_IMPORTED_MODULE_12___default()(),
           striped: true,
           bordered: true,
           hover: true,
@@ -115282,13 +115533,13 @@ function (_Component) {
           noDataIndication: function noDataIndication() {
             return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(NoDataIndication, null);
           },
-          overlay: react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_13___default()({
+          overlay: react_bootstrap_table2_overlay__WEBPACK_IMPORTED_MODULE_14___default()({
             spinner: true,
             background: 'rgba(220,220,220,0.3)',
             text: 'Loading....'
           })
         })));
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FormModal__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FormModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
         isOpen: this.state.modalsOpen['create'],
         onRequestClose: function onRequestClose(e) {
           return _this3.toggleModal('create', null);
@@ -115305,7 +115556,7 @@ function (_Component) {
           return _this3.toggleModal('create', null);
         },
         onUpdate: this.fetchUserData
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FormModal__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FormModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
         isOpen: this.state.modalsOpen['edit'],
         onRequestClose: function onRequestClose(e) {
           return _this3.toggleModal('edit', _this3.state.user);
@@ -115320,6 +115571,25 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EditForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
         onClose: function onClose(e) {
           return _this3.toggleModal('edit', _this3.state.user);
+        },
+        onUpdate: this.fetchUserData,
+        user: this.state.user
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FormModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
+        isOpen: this.state.modalsOpen['delete'],
+        onRequestClose: function onRequestClose(e) {
+          return _this3.toggleModal('delete', _this3.state.user);
+        },
+        contentLabel: "Delete User Confirmation",
+        title: "Delete User Confirmation",
+        modalAppElement: "#users",
+        styleOverride: new Object({
+          width: '40%',
+          left: '35%',
+          height: '45%'
+        })
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DeleteForm__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        onClose: function onClose(e) {
+          return _this3.toggleModal('delete', _this3.state.user);
         },
         onUpdate: this.fetchUserData,
         user: this.state.user

@@ -7,6 +7,7 @@ import TableExportAndSearch from './TableExportAndSearch';
 import TableActions from './TableActions';
 import CreateForm from './CreateForm'
 import EditForm from './EditForm'
+import DeleteForm from './DeleteForm'
 import FormModal from './FormModal'
 
 // React BootstrapTable import items
@@ -294,6 +295,26 @@ export default class Index extends Component {
 						</FormModal>
 					</div>
 					{/* END Edit user form modal */}
+
+					{/* Delete user form modal */}
+					<div>
+						<FormModal
+							isOpen={ this.state.modalsOpen['delete'] }
+							onRequestClose={ (e) => this.toggleModal('delete', this.state.user) }
+							contentLabel="Delete User Confirmation"
+							title="Delete User Confirmation"
+							modalAppElement="#users"
+							styleOverride={ new Object({width: '40%', left: '35%', height: '45%'}) }
+						>
+							{/* Define and render the actual delete user form  */}
+							<DeleteForm
+								onClose={ (e) => this.toggleModal('delete', this.state.user) }
+								onUpdate={ this.fetchUserData }
+								user={ this.state.user }
+							/>
+						</FormModal>
+					</div>
+					{/* END Delete user form modal */}
 
 				</div>
 		);

@@ -85,12 +85,25 @@ class UserController extends Controller
 	/**
 	* Remove the specified resource from storage.
 	*
-	* @param  \App\User  $user
+	* @param  integer  $id
 	* @return \Illuminate\Http\Response
 	*/
-	public function destroy(User $user)
+	public function destroy($id)
 	{
-		//
+		// Pull the user record from the database
+		$user = User::findOrFail($id);
+
+		// Remove the user account from the DB
+		$user->delete();
+
+		// Create response to be returned to the view
+		$response['result']['type'] = 'success';
+		$response['result']['message'] = 'The user was successfully deleted!';
+		$response['data'] = $user->__toString();
+
+		// Return JSON response
+		return response()->json($response);
+
 	}
 
 	/**
