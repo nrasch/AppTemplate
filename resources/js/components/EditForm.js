@@ -174,7 +174,8 @@ export default class EditForm extends Component {
 										<i className="fa fa-fw fa-plus mr-1"></i> Edit User
 									</button>
 
-										<button type="button" className="btn btn-outline-secondary ml-3" onClick={this.props.onClose}>
+										<button type="button" className="btn btn-outline-secondary ml-3"
+											onClick={ this.props.onClose }>
 											<i className="fa fa-times-circle mr-1"></i> Close
 										</button>
 

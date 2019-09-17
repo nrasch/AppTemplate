@@ -33,24 +33,36 @@ export default class Index extends Component {
 			userData: [],
 			// Track if we have an outstanding call to the backend in progress
 			loading: false,
-
+			// Variable to hold selected user object for edit/delete actions
 			user: null,
-
+			// Track which modals are open/closed
 			modalsOpen: {
 				create: false,
 				edit: false,
 				delete: false,
-			}
+			},
+			// Did something occur that requires the data table to refresh?
+			needsUpdate: false,
 		};
 
 		//Bindings
 		this.fetchUserData = this.fetchUserData.bind(this);
 		this.toggleModal = this.toggleModal.bind(this);
+		this.needsUpdate = this.needsUpdate.bind(this);
 	}
 
 	// Actions to take once the component loads
 	componentDidMount() {
 		this.fetchUserData();
+	}
+
+	// Toggle if the data table should be updated or not
+	// Set by the child create/edit/delete modals
+	needsUpdate() {
+		console.log('needsUpdate called');
+		this.setState({
+			needsUpdate: true,
+		})
 	}
 
 	// Fetch list of users from backend and assign to state data property
@@ -94,7 +106,7 @@ export default class Index extends Component {
 	toggleModal(modal, user) {
 		const currentModalState = this.state.modalsOpen[modal];
 
-		if (this.state.modalsOpen[modal]) {
+		if (this.state.modalsOpen[modal] && this.state.needsUpdate) {
 			this.fetchUserData();
 		}
 
@@ -105,6 +117,7 @@ export default class Index extends Component {
 				[modal]: !currentModalState
 			},
 			user: user,
+			needsUpdate: false,
 		});
 	}
 
@@ -271,7 +284,10 @@ export default class Index extends Component {
 							styleOverride={ new Object({width: '40%', left: '35%',}) }
 						>
 							{/* Define and render the actual create user form  */}
-							<CreateForm onClose={ (e) => this.toggleModal('create', null) } onUpdate={ this.fetchUserData } />
+							<CreateForm
+								onClose={ (e) => this.toggleModal('create', null) }
+								onUpdate={ this.needsUpdate }
+							/>
 						</FormModal>
 					</div>
 					{/* END Create user form modal */}
@@ -289,7 +305,7 @@ export default class Index extends Component {
 							{/* Define and render the actual edit user form  */}
 							<EditForm
 								onClose={ (e) => this.toggleModal('edit', this.state.user) }
-								onUpdate={ this.fetchUserData }
+								onUpdate={ this.needsUpdate }
 								user={ this.state.user }
 							/>
 						</FormModal>
@@ -309,7 +325,7 @@ export default class Index extends Component {
 							{/* Define and render the actual delete user form  */}
 							<DeleteForm
 								onClose={ (e) => this.toggleModal('delete', this.state.user) }
-								onUpdate={ this.fetchUserData }
+								onUpdate={ this.needsUpdate }
 								user={ this.state.user }
 							/>
 						</FormModal>

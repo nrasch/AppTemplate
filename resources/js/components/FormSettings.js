@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 
 
 // Define values for use by Formik::initialValues
-	initialValuesvalues for use in the
 export const initialValues = (props) => {
 	// New user; initial vals are empty
 	if (props.formType == 'create') {
@@ -81,7 +80,9 @@ export const onSubmit = (props, values, actions, setStateCallback) => {
 			if (props.formType == 'delete') {
 				props.setStateCallback('hideForm', true);
 			}
-		};
+			// Call parent's action completed method/function
+			props.props.onUpdate();
+		}
 	})
 	.catch( error => {
 		// Init container for flash error message

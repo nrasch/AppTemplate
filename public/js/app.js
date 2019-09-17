@@ -114246,11 +114246,14 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(CreateForm).call(this, props));
     _this.state = {
-      // Show/hide Laravel style flash messages regarding actions taken on the page
+      // Show/hide Laravel style flash messages
+      // regarding actions taken on the page
       showFlashMessage: false,
-      // Container for request response data/message/etc sent back by the server
+      // Container for request response data/message/etc
+      // sent back by the server
       requestResult: null,
-      // Show/hide the form overlay on ajax requests to notify the user activity is happening
+      // Show/hide the form overlay on ajax requests to notify
+      // the user activity is happening
       showOverlay: false,
       // Make a copy of the props, so we can pass the values
       // to the Formik callback props below
@@ -115063,9 +115066,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! yup */ "./node_modules/yup/lib/index.js");
 /* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(yup__WEBPACK_IMPORTED_MODULE_1__);
+// Standard import items
 
+ // Define values for use by Formik::initialValues
 
 var initialValues = function initialValues(props) {
+  // New user; initial vals are empty
   if (props.formType == 'create') {
     return {
       name: '',
@@ -115074,28 +115080,32 @@ var initialValues = function initialValues(props) {
       password_confirmation: '',
       roles: [1]
     };
-  } else if (props.formType == 'edit') {
-    return {
-      name: props.props.user.name,
-      email: props.props.user.email,
-      password: '',
-      password_confirmation: '',
-      roles: props.props.user.roles.map(function (value, key) {
-        return value.id;
-      })
-    };
-  } else if (props.formType == 'delete') {
-    return {
-      id: props.props.user.id
-    };
-  } else {
-    return {};
-  }
+  } // Existing user; populate initial vals from user object
+  else if (props.formType == 'edit') {
+      return {
+        name: props.props.user.name,
+        email: props.props.user.email,
+        password: '',
+        password_confirmation: '',
+        roles: props.props.user.roles.map(function (value, key) {
+          return value.id;
+        })
+      };
+    } // Deleting user; populate ID initial val from user object
+    else if (props.formType == 'delete') {
+        return {
+          id: props.props.user.id
+        };
+      } // We don't have a Create, Edit, Delete action; return empty object
+      else {
+          return {};
+        }
 }; // However, ror now we are going to utilize Laravel validation on the back end...
 
 var ValidationSchema = function ValidationSchema() {
   return yup__WEBPACK_IMPORTED_MODULE_1__["object"]().shape({});
-};
+}; // Define the Formik::onSubmit() callback function
+
 var onSubmit = function onSubmit(props, values, actions, setStateCallback) {
   // Set default value for end point URL
   var url = '/create_user';
@@ -115122,10 +115132,11 @@ var onSubmit = function onSubmit(props, values, actions, setStateCallback) {
 
       if (props.formType == 'delete') {
         props.setStateCallback('hideForm', true);
-      }
-    }
+      } // Call parent's action completed methd/function
 
-    ;
+
+      props.props.onUpdate();
+    }
   })["catch"](function (error) {
     // Init container for flash error message
     var data = {}; // Is this a Laravel back end validation error?
@@ -115269,11 +115280,13 @@ function (_Component) {
         create: false,
         edit: false,
         "delete": false
-      }
+      },
+      needsUpdate: false
     }; //Bindings
 
     _this.fetchUserData = _this.fetchUserData.bind(_assertThisInitialized(_this));
     _this.toggleModal = _this.toggleModal.bind(_assertThisInitialized(_this));
+    _this.needsUpdate = _this.needsUpdate.bind(_assertThisInitialized(_this));
     return _this;
   } // Actions to take once the component loads
 
@@ -115282,6 +115295,16 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.fetchUserData();
+    } // Toggle if the data table should be updated or not
+    // Called by the child create/edit/delete modals
+
+  }, {
+    key: "needsUpdate",
+    value: function needsUpdate() {
+      console.log('needsUpdate called');
+      this.setState({
+        needsUpdate: true
+      });
     } // Fetch list of users from backend and assign to state data property
 
   }, {
@@ -115324,7 +115347,7 @@ function (_Component) {
     value: function toggleModal(modal, user) {
       var currentModalState = this.state.modalsOpen[modal];
 
-      if (this.state.modalsOpen[modal]) {
+      if (this.state.modalsOpen[modal] && this.state.needsUpdate) {
         this.fetchUserData();
       } // Note the brackets around the word 'modal'
       // Computed properties:  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer#Computed_property_names
@@ -115332,7 +115355,8 @@ function (_Component) {
 
       this.setState({
         modalsOpen: _defineProperty({}, modal, !currentModalState),
-        user: user
+        user: user,
+        needsUpdate: false
       });
     } // Wrap the user's role(s) in a bootstrap badge element
     // Called by the user data table below
@@ -115481,7 +115505,7 @@ function (_Component) {
         onClose: function onClose(e) {
           return _this3.toggleModal('create', null);
         },
-        onUpdate: this.fetchUserData
+        onUpdate: this.needsUpdate
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FormModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
         isOpen: this.state.modalsOpen['edit'],
         onRequestClose: function onRequestClose(e) {
@@ -115498,7 +115522,7 @@ function (_Component) {
         onClose: function onClose(e) {
           return _this3.toggleModal('edit', _this3.state.user);
         },
-        onUpdate: this.fetchUserData,
+        onUpdate: this.needsUpdate,
         user: this.state.user
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FormModal__WEBPACK_IMPORTED_MODULE_7__["default"], {
         isOpen: this.state.modalsOpen['delete'],
@@ -115517,7 +115541,7 @@ function (_Component) {
         onClose: function onClose(e) {
           return _this3.toggleModal('delete', _this3.state.user);
         },
-        onUpdate: this.fetchUserData,
+        onUpdate: this.needsUpdate,
         user: this.state.user
       }))));
     } // END render
