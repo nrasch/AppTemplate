@@ -10,6 +10,7 @@ import isEmpty from 'lodash/isEmpty'
 
 // Our custom components
 import FlashMessage from './FlashMessage';
+import { initialValues, ValidationSchema, onSubmit } from './FormSettings';
 
 
 export default class DeleteForm extends Component {
@@ -27,6 +28,14 @@ export default class DeleteForm extends Component {
 			// Show/hide the form overlay on ajax requests to notify the user
 			// activity is happening
 			showOverlay: false,
+			// Make a copy of the props, so we can pass the values
+			// to the Formik callback props below
+			props: props,
+			// Define what type of form this is
+			formType: 'delete',
+			// Define a callback that child components can call in order
+			// to update this component's state
+			setStateCallback: this.setStateCallback.bind(this),
 			// Show/hide the delete confirmation form, 'cause it looks odd to
 			// still have it once the item is deleted
 			hideForm: false,
@@ -38,6 +47,14 @@ export default class DeleteForm extends Component {
 
 	// Actions to take once the component loads
 	componentDidMount() {
+	}
+
+	// Define a callback that child components can call in order
+	// to update this component's state
+	setStateCallback(key, value) {
+		this.setState({
+			[key]: value
+		});
 	}
 
 	// Hide the the flash message at the top of the modal
@@ -81,88 +98,9 @@ export default class DeleteForm extends Component {
 				<div onClick={this.hideFlashMessage}>
 					{/* Formik form */}
 					<Formik
-						initialValues={{
-							id: this.props.user.id,
-						}}
+						initialValues = { initialValues(this.state) }
 						validationSchema={ValidationSchema}
-						onSubmit={(values, actions) => {
-							// Show the overlay while the ajax request is processing
-							this.setState({
-								showOverlay: true,
-							});
-
-							// Submit the request to the server and handle the response
-							axios.delete(
-								'/delete_user/' + this.props.user.id,
-								values,
-								{timeout: 1000 * 10},
-							)
-							.then(response => {
-								if (response.data.result) {
-									// Store the data/message/etc sent back by the server in the state
-									this.setState({
-										requestResult: response.data.result,
-										hideForm: true,
-									});
-								};
-							})
-							.catch( error => {
-								// Init container for flash error message
-								let data = {};
-
-								// Is this a Laravel back end validation error?
-								if (typeof error.response !== 'undefined') {
-									if (error.response.status == '422') {
-										// Render the errors on the page's form's elements
-										actions.setErrors(error.response.data.errors);
-
-										// Or if for some reason we wanted to set the field errors one-by-one:
-										// _.forOwn(error.response.data.errors, function(value, key) {
-										// 		actions.setFieldError(
-										// 			key, value,
-										// 		);
-										// });
-
-										// Define flash message to show user
-										data = {
-											type: 'danger',
-											message: <p className="mb-0"><i className="far fa-frown ml-1">
-												</i>&nbsp;&nbsp;Unable to complete request.  Please correct the problems below.</p>,
-										};
-									}
-								}
-
-								// Define flash message to show user if one hasn't already been set
-								if (_.isEmpty(data)) {
-									data = {
-										type: 'danger',
-										message: <p className="mb-0"><i className="far fa-frown ml-1">
-											</i>&nbsp;&nbsp;Error:  Unable to process your request at this time.  Please try again later.</p>,
-									};
-								}
-
-								// Pass the flash message data to the flash message display component
-								this.setState({
-									requestResult: data,
-								});
-							})
-							.then( () => {
-
-								// Hide the ajax processing overlay
-								this.setState({
-									showOverlay: false,
-								});
-
-								// Tell the form we are done submitting
-								actions.setSubmitting(false);
-
-								// Show the flash message with the results of the page action
-								this.setState((state, props) => ({
-									showFlashMessage: true,
-								}));
-
-							});
-						}}
+						onSubmit = { (values, actions) => onSubmit(this.state, values, actions) }
 					>
 						{({ errors, dirty, status, touched, isSubmitting, setFieldValue }) => (
 

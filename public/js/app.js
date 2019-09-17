@@ -114201,7 +114201,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lodash/isEmpty */ "./node_modules/lodash/isEmpty.js");
 /* harmony import */ var lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _FlashMessage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FlashMessage */ "./resources/js/components/FlashMessage.js");
+/* harmony import */ var _FormSettings__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./FormSettings */ "./resources/js/components/FormSettings.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -114230,6 +114233,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var CreateForm =
 /*#__PURE__*/
 function (_Component) {
@@ -114247,7 +114251,15 @@ function (_Component) {
       // Container for request response data/message/etc sent back by the server
       requestResult: null,
       // Show/hide the form overlay on ajax requests to notify the user activity is happening
-      showOverlay: false //Bindings
+      showOverlay: false,
+      // Make a copy of the props, so we can pass the values
+      // to the Formik callback props below
+      props: props,
+      // Define what type of form this is
+      formType: 'create',
+      // Define a callback that child components can call in order
+      // to update this component's state
+      setStateCallback: _this.setStateCallback.bind(_assertThisInitialized(_this)) //Bindings
 
     };
     _this.hideFlashMessage = _this.hideFlashMessage.bind(_assertThisInitialized(_this));
@@ -114257,7 +114269,14 @@ function (_Component) {
 
   _createClass(CreateForm, [{
     key: "componentDidMount",
-    value: function componentDidMount() {} // Hide the the flash message at the top of the modal
+    value: function componentDidMount() {} // Define a callback that child components can call in order
+    // to update this component's state
+
+  }, {
+    key: "setStateCallback",
+    value: function setStateCallback(key, value) {
+      this.setState(_defineProperty({}, key, value));
+    } // Hide the the flash message at the top of the modal
 
   }, {
     key: "hideFlashMessage",
@@ -114272,16 +114291,7 @@ function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      // If we choose to utilize form validation client side:
-      // const ValidationSchema = Yup.object().shape({
-      // 	name: Yup.string()
-      // 	.min(2, 'Too Short!')
-      // 	.max(50, 'Too Long!')
-      // 	.required('The name field is required.')
-      // });
-      // However, ror now we are going to utilize Laravel validation on the back end...
-      var ValidationSchema = yup__WEBPACK_IMPORTED_MODULE_3__["object"]().shape({}); // Prepare and return React elements
-
+      // Prepare and return React elements
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FlashMessage__WEBPACK_IMPORTED_MODULE_6__["default"], {
         show: this.state.showFlashMessage,
         result: this.state.requestResult
@@ -114292,94 +114302,10 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         onClick: this.hideFlashMessage
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(formik__WEBPACK_IMPORTED_MODULE_2__["Formik"], {
-        initialValues: {
-          name: '',
-          email: '',
-          password: '',
-          password_confirmation: '',
-          roles: [1]
-        },
-        validationSchema: ValidationSchema,
+        initialValues: Object(_FormSettings__WEBPACK_IMPORTED_MODULE_7__["initialValues"])(this.state),
+        validationSchema: _FormSettings__WEBPACK_IMPORTED_MODULE_7__["ValidationSchema"],
         onSubmit: function onSubmit(values, actions) {
-          // Show the overlay while the ajax request is processing
-          _this2.setState({
-            showOverlay: true
-          }); // Submit the request to the server and handle the response
-
-
-          axios.post('/create_user', values, {
-            timeout: 1000 * 10
-          }).then(function (response) {
-            if (response.data.result) {
-              // Store the data/message/etc sent back by the server in the state
-              _this2.setState({
-                requestResult: response.data.result
-              }); // Reset the form if the user was created successfully
-
-
-              if (response.data.result.type == 'success') {
-                actions.resetForm(_this2.props.initialValues);
-              }
-            }
-
-            ;
-          })["catch"](function (error) {
-            // Init container for flash error message
-            var data = {}; // Is this a Laravel back end validation error?
-
-            if (typeof error.response !== 'undefined') {
-              if (error.response.status == '422') {
-                // Render the errors on the page's form's elements
-                actions.setErrors(error.response.data.errors); // Or if for some reason we wanted to set the field errors one-by-one:
-                // _.forOwn(error.response.data.errors, function(value, key) {
-                // 		actions.setFieldError(
-                // 			key, value,
-                // 		);
-                // });
-                // Define flash message to show user
-
-                data = {
-                  type: 'danger',
-                  message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-                    className: "mb-0"
-                  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-                    className: "far fa-frown ml-1"
-                  }), "\xA0\xA0Unable to complete request.  Please correct the problems below.")
-                };
-              }
-            } // Define flash message to show user if one hasn't already been set
-
-
-            if (_.isEmpty(data)) {
-              data = {
-                type: 'danger',
-                message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-                  className: "mb-0"
-                }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-                  className: "far fa-frown ml-1"
-                }), "\xA0\xA0Error:  Unable to process your request at this time.  Please try again later.")
-              };
-            } // Pass the flash message data to the flash message display component
-
-
-            _this2.setState({
-              requestResult: data
-            });
-          }).then(function () {
-            // Hide the ajax processing overlay
-            _this2.setState({
-              showOverlay: false
-            }); // Tell the form we are done submitting
-
-
-            actions.setSubmitting(false); // Show the flash message with the results of the page action
-
-            _this2.setState(function (state, props) {
-              return {
-                showFlashMessage: true
-              };
-            });
-          });
+          return Object(_FormSettings__WEBPACK_IMPORTED_MODULE_7__["onSubmit"])(_this2.state, values, actions);
         }
       }, function (_ref) {
         var errors = _ref.errors,
@@ -114525,7 +114451,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lodash/isEmpty */ "./node_modules/lodash/isEmpty.js");
 /* harmony import */ var lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _FlashMessage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FlashMessage */ "./resources/js/components/FlashMessage.js");
+/* harmony import */ var _FormSettings__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./FormSettings */ "./resources/js/components/FormSettings.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -114554,6 +114483,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var DeleteForm =
 /*#__PURE__*/
 function (_Component) {
@@ -114575,6 +114505,14 @@ function (_Component) {
       // Show/hide the form overlay on ajax requests to notify the user
       // activity is happening
       showOverlay: false,
+      // Make a copy of the props, so we can pass the values
+      // to the Formik callback props below
+      props: props,
+      // Define what type of form this is
+      formType: 'delete',
+      // Define a callback that child components can call in order
+      // to update this component's state
+      setStateCallback: _this.setStateCallback.bind(_assertThisInitialized(_this)),
       // Show/hide the delete confirmation form, 'cause it looks odd to
       // still have it once the item is deleted
       hideForm: false //Bindings
@@ -114587,7 +114525,14 @@ function (_Component) {
 
   _createClass(DeleteForm, [{
     key: "componentDidMount",
-    value: function componentDidMount() {} // Hide the the flash message at the top of the modal
+    value: function componentDidMount() {} // Define a callback that child components can call in order
+    // to update this component's state
+
+  }, {
+    key: "setStateCallback",
+    value: function setStateCallback(key, value) {
+      this.setState(_defineProperty({}, key, value));
+    } // Hide the the flash message at the top of the modal
 
   }, {
     key: "hideFlashMessage",
@@ -114622,86 +114567,10 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         onClick: this.hideFlashMessage
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(formik__WEBPACK_IMPORTED_MODULE_2__["Formik"], {
-        initialValues: {
-          id: this.props.user.id
-        },
+        initialValues: Object(_FormSettings__WEBPACK_IMPORTED_MODULE_7__["initialValues"])(this.state),
         validationSchema: ValidationSchema,
         onSubmit: function onSubmit(values, actions) {
-          // Show the overlay while the ajax request is processing
-          _this2.setState({
-            showOverlay: true
-          }); // Submit the request to the server and handle the response
-
-
-          axios["delete"]('/delete_user/' + _this2.props.user.id, values, {
-            timeout: 1000 * 10
-          }).then(function (response) {
-            if (response.data.result) {
-              // Store the data/message/etc sent back by the server in the state
-              _this2.setState({
-                requestResult: response.data.result,
-                hideForm: true
-              });
-            }
-
-            ;
-          })["catch"](function (error) {
-            // Init container for flash error message
-            var data = {}; // Is this a Laravel back end validation error?
-
-            if (typeof error.response !== 'undefined') {
-              if (error.response.status == '422') {
-                // Render the errors on the page's form's elements
-                actions.setErrors(error.response.data.errors); // Or if for some reason we wanted to set the field errors one-by-one:
-                // _.forOwn(error.response.data.errors, function(value, key) {
-                // 		actions.setFieldError(
-                // 			key, value,
-                // 		);
-                // });
-                // Define flash message to show user
-
-                data = {
-                  type: 'danger',
-                  message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-                    className: "mb-0"
-                  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-                    className: "far fa-frown ml-1"
-                  }), "\xA0\xA0Unable to complete request.  Please correct the problems below.")
-                };
-              }
-            } // Define flash message to show user if one hasn't already been set
-
-
-            if (_.isEmpty(data)) {
-              data = {
-                type: 'danger',
-                message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-                  className: "mb-0"
-                }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-                  className: "far fa-frown ml-1"
-                }), "\xA0\xA0Error:  Unable to process your request at this time.  Please try again later.")
-              };
-            } // Pass the flash message data to the flash message display component
-
-
-            _this2.setState({
-              requestResult: data
-            });
-          }).then(function () {
-            // Hide the ajax processing overlay
-            _this2.setState({
-              showOverlay: false
-            }); // Tell the form we are done submitting
-
-
-            actions.setSubmitting(false); // Show the flash message with the results of the page action
-
-            _this2.setState(function (state, props) {
-              return {
-                showFlashMessage: true
-              };
-            });
-          });
+          return Object(_FormSettings__WEBPACK_IMPORTED_MODULE_7__["onSubmit"])(_this2.state, values, actions);
         }
       }, function (_ref) {
         var errors = _ref.errors,
@@ -114774,7 +114643,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lodash/isEmpty */ "./node_modules/lodash/isEmpty.js");
 /* harmony import */ var lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(lodash_isEmpty__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _FlashMessage__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FlashMessage */ "./resources/js/components/FlashMessage.js");
+/* harmony import */ var _FormSettings__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./FormSettings */ "./resources/js/components/FormSettings.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -114803,6 +114675,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
 var EditForm =
 /*#__PURE__*/
 function (_Component) {
@@ -114815,12 +114688,23 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(EditForm).call(this, props));
     _this.state = {
-      // Show/hide Laravel style flash messages regarding actions taken on the page
+      // Show/hide Laravel style flash messages regarding
+      // actions taken on the page
       showFlashMessage: false,
-      // Container for request response data/message/etc sent back by the server
+      // Container for request response data/message/etc
+      // sent back by the server
       requestResult: null,
-      // Show/hide the form overlay on ajax requests to notify the user activity is happening
-      showOverlay: false //Bindings
+      // Show/hide the form overlay on ajax requests to
+      // notify the user activity is happening
+      showOverlay: false,
+      // Make a copy of the props, so we can pass the values
+      // to the Formik callback props below
+      props: props,
+      // Define what type of form this is
+      formType: 'edit',
+      // Define a callback that child components can call in order
+      // to update this component's state
+      setStateCallback: _this.setStateCallback.bind(_assertThisInitialized(_this)) //Bindings
 
     };
     _this.hideFlashMessage = _this.hideFlashMessage.bind(_assertThisInitialized(_this));
@@ -114830,7 +114714,14 @@ function (_Component) {
 
   _createClass(EditForm, [{
     key: "componentDidMount",
-    value: function componentDidMount() {} // Hide the the flash message at the top of the modal
+    value: function componentDidMount() {} // Define a callback that child components can call in order
+    // to update this component's state
+
+  }, {
+    key: "setStateCallback",
+    value: function setStateCallback(key, value) {
+      this.setState(_defineProperty({}, key, value));
+    } // Hide the the flash message at the top of the modal
 
   }, {
     key: "hideFlashMessage",
@@ -114845,16 +114736,7 @@ function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      // If we choose to utilize form validation client side:
-      // const ValidationSchema = Yup.object().shape({
-      // 	name: Yup.string()
-      // 	.min(2, 'Too Short!')
-      // 	.max(50, 'Too Long!')
-      // 	.required('The name field is required.')
-      // });
-      // However, ror now we are going to utilize Laravel validation on the back end...
-      var ValidationSchema = yup__WEBPACK_IMPORTED_MODULE_3__["object"]().shape({}); // Prepare and return React elements
-
+      // Prepare and return React elements
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FlashMessage__WEBPACK_IMPORTED_MODULE_6__["default"], {
         show: this.state.showFlashMessage,
         result: this.state.requestResult
@@ -114865,91 +114747,10 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         onClick: this.hideFlashMessage
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(formik__WEBPACK_IMPORTED_MODULE_2__["Formik"], {
-        initialValues: {
-          name: this.props.user.name,
-          email: this.props.user.email,
-          password: '',
-          password_confirmation: '',
-          roles: this.props.user.roles.map(function (value, key) {
-            return value.id;
-          })
-        },
-        validationSchema: ValidationSchema,
+        initialValues: Object(_FormSettings__WEBPACK_IMPORTED_MODULE_7__["initialValues"])(this.state),
+        validationSchema: _FormSettings__WEBPACK_IMPORTED_MODULE_7__["ValidationSchema"],
         onSubmit: function onSubmit(values, actions) {
-          // Show the overlay while the ajax request is processing
-          _this2.setState({
-            showOverlay: true
-          }); // Submit the request to the server and handle the response
-
-
-          axios.put('/edit_user/' + _this2.props.user.id, values, {
-            timeout: 1000 * 10
-          }).then(function (response) {
-            if (response.data.result) {
-              // Store the data/message/etc sent back by the server in the state
-              _this2.setState({
-                requestResult: response.data.result
-              });
-            }
-
-            ;
-          })["catch"](function (error) {
-            // Init container for flash error message
-            var data = {}; // Is this a Laravel back end validation error?
-
-            if (typeof error.response !== 'undefined') {
-              if (error.response.status == '422') {
-                // Render the errors on the page's form's elements
-                actions.setErrors(error.response.data.errors); // Or if for some reason we wanted to set the field errors one-by-one:
-                // _.forOwn(error.response.data.errors, function(value, key) {
-                // 		actions.setFieldError(
-                // 			key, value,
-                // 		);
-                // });
-                // Define flash message to show user
-
-                data = {
-                  type: 'danger',
-                  message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-                    className: "mb-0"
-                  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-                    className: "far fa-frown ml-1"
-                  }), "\xA0\xA0Unable to complete request.  Please correct the problems below.")
-                };
-              }
-            } // Define flash message to show user if one hasn't already been set
-
-
-            if (_.isEmpty(data)) {
-              data = {
-                type: 'danger',
-                message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-                  className: "mb-0"
-                }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-                  className: "far fa-frown ml-1"
-                }), "\xA0\xA0Error:  Unable to process your request at this time.  Please try again later.")
-              };
-            } // Pass the flash message data to the flash message display component
-
-
-            _this2.setState({
-              requestResult: data
-            });
-          }).then(function () {
-            // Hide the ajax processing overlay
-            _this2.setState({
-              showOverlay: false
-            }); // Tell the form we are done submitting
-
-
-            actions.setSubmitting(false); // Show the flash message with the results of the page action
-
-            _this2.setState(function (state, props) {
-              return {
-                showFlashMessage: true
-              };
-            });
-          });
+          return Object(_FormSettings__WEBPACK_IMPORTED_MODULE_7__["onSubmit"])(_this2.state, values, actions);
         }
       }, function (_ref) {
         var errors = _ref.errors,
@@ -115243,6 +115044,131 @@ function (_React$Component) {
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/FormSettings.js":
+/*!*************************************************!*\
+  !*** ./resources/js/components/FormSettings.js ***!
+  \*************************************************/
+/*! exports provided: initialValues, ValidationSchema, onSubmit */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initialValues", function() { return initialValues; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ValidationSchema", function() { return ValidationSchema; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onSubmit", function() { return onSubmit; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! yup */ "./node_modules/yup/lib/index.js");
+/* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(yup__WEBPACK_IMPORTED_MODULE_1__);
+
+
+var initialValues = function initialValues(props) {
+  if (props.formType == 'create') {
+    return {
+      name: '',
+      email: '',
+      password: '',
+      password_confirmation: '',
+      roles: [1]
+    };
+  } else if (props.formType == 'edit') {
+    return {
+      name: props.props.user.name,
+      email: props.props.user.email,
+      password: '',
+      password_confirmation: '',
+      roles: props.props.user.roles.map(function (value, key) {
+        return value.id;
+      })
+    };
+  } else if (props.formType == 'delete') {
+    return {
+      id: props.props.user.id
+    };
+  } else {
+    return {};
+  }
+}; // However, ror now we are going to utilize Laravel validation on the back end...
+
+var ValidationSchema = function ValidationSchema() {
+  return yup__WEBPACK_IMPORTED_MODULE_1__["object"]().shape({});
+};
+var onSubmit = function onSubmit(props, values, actions, setStateCallback) {
+  // Set default value for end point URL
+  var url = '/create_user';
+  var verb = 'post'; // Calculate end point URL based on form type
+  // (i.e. create/delete)
+
+  if (props.formType == 'edit') {
+    url = '/edit_user/' + props.props.user.id;
+    verb = 'put';
+  } else if (props.formType == 'delete') {
+    url = '/delete_user/' + props.props.user.id;
+    verb = 'delete';
+  } // Show the overlay while the ajax request is processing
+
+
+  props.setStateCallback('showOverlay', true); // Submit the request to the server and handle the response
+
+  axios[verb](url, values, {
+    timeout: 1000 * 10
+  }).then(function (response) {
+    if (response.data.result) {
+      // Store the data/message/etc sent back by the server in the state
+      props.setStateCallback('requestResult', response.data.result); // Hide the delete user form if successfull
+
+      if (props.formType == 'delete') {
+        props.setStateCallback('hideForm', true);
+      }
+    }
+
+    ;
+  })["catch"](function (error) {
+    // Init container for flash error message
+    var data = {}; // Is this a Laravel back end validation error?
+
+    if (typeof error.response !== 'undefined') {
+      if (error.response.status == '422') {
+        // Render the errors on the page's form's elements
+        actions.setErrors(error.response.data.errors); // Define flash message to show user
+
+        data = {
+          type: 'danger',
+          message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+            className: "mb-0"
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "far fa-frown ml-1"
+          }), "\xA0\xA0Unable to complete request. Please correct the problems below.")
+        };
+      }
+    } // Define flash message to show user if one hasn't already been set
+
+
+    if (_.isEmpty(data)) {
+      data = {
+        type: 'danger',
+        message: react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+          className: "mb-0"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "far fa-frown ml-1"
+        }), "\xA0\xA0Error:  Unable to process your request at this time. Please try again later.")
+      };
+    } // Pass the flash message data to the flash message display component
+
+
+    props.setStateCallback('requestResult', data);
+  }).then(function () {
+    // Hide the overlay now that everything has been processed
+    props.setStateCallback('showOverlay', false); // Tell the form we are done submitting
+
+    actions.setSubmitting(false); // Show the flash message with the results of the page action
+
+    props.setStateCallback('showFlashMessage', true);
+  });
+};
 
 /***/ }),
 

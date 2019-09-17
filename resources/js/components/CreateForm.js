@@ -10,7 +10,7 @@ import isEmpty from 'lodash/isEmpty'
 
 // Our custom components
 import FlashMessage from './FlashMessage';
-
+import { initialValues, ValidationSchema, onSubmit } from './FormSettings';
 
 export default class CreateForm extends Component {
 
@@ -18,12 +18,23 @@ export default class CreateForm extends Component {
 		super(props);
 
 		this.state = {
-			// Show/hide Laravel style flash messages regarding actions taken on the page
+			// Show/hide Laravel style flash messages
+			// regarding actions taken on the page
 			showFlashMessage: false,
-			// Container for request response data/message/etc sent back by the server
+			// Container for request response data/message/etc
+			// sent back by the server
 			requestResult: null,
-			// Show/hide the form overlay on ajax requests to notify the user activity is happening
+			// Show/hide the form overlay on ajax requests to notify
+			// the user activity is happening
 			showOverlay: false,
+			// Make a copy of the props, so we can pass the values
+			// to the Formik callback props below
+			props: props,
+			// Define what type of form this is
+			formType: 'create',
+			// Define a callback that child components can call in order
+			// to update this component's state
+			setStateCallback: this.setStateCallback.bind(this),
 		}
 
 		//Bindings
@@ -32,6 +43,14 @@ export default class CreateForm extends Component {
 
 	// Actions to take once the component loads
 	componentDidMount() {
+	}
+
+	// Define a callback that child components can call in order
+	// to update this component's state
+	setStateCallback(key, value) {
+		this.setState({
+			[key]: value
+		});
 	}
 
 	// Hide the the flash message at the top of the modal
@@ -43,18 +62,6 @@ export default class CreateForm extends Component {
 
 	// Examine this.props and this.state and return class response (typical React elements)
 	render() {
-
-		// If we choose to utilize form validation client side:
-		// const ValidationSchema = Yup.object().shape({
-		// 	name: Yup.string()
-		// 	.min(2, 'Too Short!')
-		// 	.max(50, 'Too Long!')
-		// 	.required('The name field is required.')
-		// });
-
-		// However, ror now we are going to utilize Laravel validation on the back end...
-		const ValidationSchema = Yup.object().shape({
-		});
 
 		// Prepare and return React elements
 		return (
@@ -75,96 +82,9 @@ export default class CreateForm extends Component {
 				<div onClick={this.hideFlashMessage}>
 					{/* Formik form */}
 					<Formik
-						initialValues={{
-							name: '',
-							email: '',
-							password: '',
-							password_confirmation: '',
-							roles: [1],
-						}}
-						validationSchema={ValidationSchema}
-						onSubmit={(values, actions) => {
-							// Show the overlay while the ajax request is processing
-							this.setState({
-								showOverlay: true,
-							});
-
-							// Submit the request to the server and handle the response
-							axios.post(
-								'/create_user',
-								values,
-								{timeout: 1000 * 10},
-							)
-							.then(response => {
-								if (response.data.result) {
-									// Store the data/message/etc sent back by the server in the state
-									this.setState({
-										requestResult: response.data.result,
-									});
-
-									// Reset the form if the user was created successfully
-									if (response.data.result.type == 'success') {
-										actions.resetForm(this.props.initialValues);
-									}
-								};
-							})
-							.catch( error => {
-								// Init container for flash error message
-								let data = {};
-
-								// Is this a Laravel back end validation error?
-								if (typeof error.response !== 'undefined') {
-									if (error.response.status == '422') {
-										// Render the errors on the page's form's elements
-										actions.setErrors(error.response.data.errors);
-
-										// Or if for some reason we wanted to set the field errors one-by-one:
-										// _.forOwn(error.response.data.errors, function(value, key) {
-										// 		actions.setFieldError(
-										// 			key, value,
-										// 		);
-										// });
-
-										// Define flash message to show user
-										data = {
-											type: 'danger',
-											message: <p className="mb-0"><i className="far fa-frown ml-1">
-												</i>&nbsp;&nbsp;Unable to complete request.  Please correct the problems below.</p>,
-										};
-									}
-								}
-
-								// Define flash message to show user if one hasn't already been set
-								if (_.isEmpty(data)) {
-									data = {
-										type: 'danger',
-										message: <p className="mb-0"><i className="far fa-frown ml-1">
-											</i>&nbsp;&nbsp;Error:  Unable to process your request at this time.  Please try again later.</p>,
-									};
-								}
-
-								// Pass the flash message data to the flash message display component
-								this.setState({
-									requestResult: data,
-								});
-							})
-							.then( () => {
-
-								// Hide the ajax processing overlay
-								this.setState({
-									showOverlay: false,
-								});
-
-								// Tell the form we are done submitting
-								actions.setSubmitting(false);
-
-								// Show the flash message with the results of the page action
-								this.setState((state, props) => ({
-									showFlashMessage: true,
-								}));
-
-							});
-						}}
+						initialValues = { initialValues(this.state) }
+						validationSchema = { ValidationSchema }
+						onSubmit = { (values, actions) => onSubmit(this.state, values, actions) }
 					>
 						{({ errors, dirty, status, touched, isSubmitting, setFieldValue }) => (
 
