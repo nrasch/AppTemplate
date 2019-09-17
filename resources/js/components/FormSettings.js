@@ -1,8 +1,12 @@
+// Standard import items
 import React from 'react';
 import * as Yup from 'yup';
 
 
+// Define values for use by Formik::initialValues
+	initialValuesvalues for use in the
 export const initialValues = (props) => {
+	// New user; initial vals are empty
 	if (props.formType == 'create') {
 		return {
 			name: '',
@@ -12,6 +16,7 @@ export const initialValues = (props) => {
 			roles: [1],
 		}
 	}
+	// Existing user; populate initial vals from user object
 	else if (props.formType == 'edit') {
 		return {
 			name: props.props.user.name,
@@ -23,16 +28,17 @@ export const initialValues = (props) => {
 			}),
 		}
 	}
+	// Deleting user; populate ID initial val from user object
 	else if (props.formType == 'delete') {
 		return {
 			id: props.props.user.id,
 		}
 	}
+	// We don't have a Create, Edit, Delete action; return empty object
 	else {
 		return {}
 	}
 };
-
 
 // However, ror now we are going to utilize Laravel validation on the back end...
 export const ValidationSchema = () => (
@@ -40,6 +46,7 @@ export const ValidationSchema = () => (
 );
 
 
+// Define the Formik::onSubmit() callback function
 export const onSubmit = (props, values, actions, setStateCallback) => {
 
 	// Set default value for end point URL
